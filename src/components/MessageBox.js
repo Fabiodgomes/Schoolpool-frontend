@@ -13,14 +13,21 @@ export const MessageBox = () => {
   if (!displayMessage) return null;
 
   return (
-    <MessageContainer>
-      <p style={{color: "#6D8B74", fontWeight: "bold", marginTop: 0, padding: 15}}>{message.text}</p>
+    <MessageContainer message={message}>
+      <Text message={message}>{message.text}</Text>
     </MessageContainer>
   )
 }
 
 const MessageContainer = styled.div`
-  background-color: #C2DED1;
+  background-color: ${props => props.message.variant === "success" ? "#C2DED1" : "#F4BFBF"  } ;
   height: 50px;
-  border-bottom: 1px solid #6D8B74
+  border-bottom: 1px solid ${props => props.message.variant === "success" ? "#6D8B74" : "#F32424"  } ;
+`
+
+const Text = styled.p`
+  color: ${props => props.message.variant === "success" ? "#6D8B74" : "black"};
+  font-weight: bold;
+  margin-top: 0px; 
+  padding: 15px;
 `
