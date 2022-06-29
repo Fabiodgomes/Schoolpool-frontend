@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { selectMessage } from "../store/appState/selectors";
+import { clearMessage } from "../store/appState/slice";
 
 export const MessageBox = () => {
 
@@ -15,11 +16,14 @@ export const MessageBox = () => {
   return (
     <MessageContainer message={message}>
       <Text message={message}>{message.text}</Text>
+      <Text onClick={() => dispatch(clearMessage())} message={message}>x</Text>
     </MessageContainer>
   )
 }
 
 const MessageContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   background-color: ${props => props.message.variant === "success" ? "#C2DED1" : "#F4BFBF"  } ;
   height: 50px;
   border-bottom: 1px solid ${props => props.message.variant === "success" ? "#6D8B74" : "#F32424"  } ;
