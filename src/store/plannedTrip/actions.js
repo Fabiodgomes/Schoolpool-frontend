@@ -6,6 +6,7 @@ import {
   fetchScheduledTrips,
   inscription,
   scheduleATrip,
+  planATrip,
 } from "./slice";
 
 export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
@@ -63,6 +64,53 @@ export const makeInscription =
         scheduleATrip({
           numberOfKids: numberOfKids,
           plannedTripId: id,
+          userId: getState().user.user.id,
+        })
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+export const newPlannedTrip =
+  (
+    token,
+    date,
+    time,
+    capacity,
+    latitude,
+    longitude,
+    schoolId,
+    transportationTypeId
+  ) =>
+  async (dispatch, getState) => {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/plannedtrips/newplannedtrip`,
+        {
+          date,
+          time,
+          capacity,
+          latitude,
+          longitude,
+          schoolId,
+          transportationTypeId,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log("getState", getState());
+
+      dispatch(
+        planATrip({
+          date: date,
+          time: time,
+          capacity: capacity,
+          latitude: latitude,
+          longitude: longitude,
+          schoolId: schoolId,
+          transportationTypeId: transportationTypeId,
           userId: getState().user.user.id,
         })
       );

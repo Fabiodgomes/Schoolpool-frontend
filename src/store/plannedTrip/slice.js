@@ -25,6 +25,9 @@ export const plannedTripSlice = createSlice({
     scheduleATrip: (state, action) => {
       state.scheduledTrips = [...state.scheduledTrips, action.payload];
     },
+    planATrip: (state, action) => {
+      state.allPlannedTrips = [...state.allPlannedTrips, action.payload];
+    },
   },
 });
 
@@ -34,6 +37,7 @@ export const {
   fetchScheduledTrips,
   inscription,
   scheduleATrip,
+  planATrip,
 } = plannedTripSlice.actions;
 
 export default plannedTripSlice.reducer;

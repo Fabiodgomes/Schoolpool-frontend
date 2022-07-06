@@ -6,6 +6,7 @@ import { selectAllPlannedTrips } from "../../store/plannedTrip/selectors";
 import { fetchPlannedTrips } from "../../store/plannedTrip/actions";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { selectToken } from "../../store/user/selectors";
+import NewPlannedTrip from "../../components/NewPlannedTrip/NewPlannedTrip";
 
 export const Homepage = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export const Homepage = () => {
                   />
                 ))}
           </table>
+          <NewPlannedTrip />
         </div>
       ) : (
         <NavLink to="/login">Please login to display the planned trips</NavLink>
