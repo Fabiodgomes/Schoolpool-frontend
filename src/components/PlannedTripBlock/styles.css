@@ -1,0 +1,10 @@
+td {
+  padding: 15px;
+  border: solid 2px black;
+  justify-content: center;
+}
+th {
+  padding: 10px;
+  border: solid 1px black;
+  justify-content: center;
+}

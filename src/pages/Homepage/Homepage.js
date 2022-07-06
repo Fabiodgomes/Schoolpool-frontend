@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { NavLink } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectAllPlannedTrips } from "../../store/plannedTrip/selectors";
 import { fetchPlannedTrips } from "../../store/plannedTrip/actions";
-import PlannedTripBlock from "../../components/PlannedTripBlock.js/PlannedTripBlock";
+import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { selectToken } from "../../store/user/selectors";
 
 export const Homepage = () => {
@@ -29,20 +29,20 @@ export const Homepage = () => {
               <th>Latitude</th>
               <th>Longitude</th>
               <th>Inscription</th>
-              {!allPlannedTrips.length
-                ? "Loading"
-                : allPlannedTrips.map((plannedTrip, i) => (
-                    <PlannedTripBlock
-                      key={i}
-                      id={plannedTrip.id}
-                      date={plannedTrip.date}
-                      time={plannedTrip.time}
-                      capacity={plannedTrip.capacity}
-                      latitude={plannedTrip.latitude}
-                      longitude={plannedTrip.longitude}
-                    />
-                  ))}
             </tr>
+            {!allPlannedTrips.length
+              ? "Loading"
+              : allPlannedTrips.map((plannedTrip, i) => (
+                  <PlannedTripBlock
+                    key={i}
+                    id={plannedTrip.id}
+                    date={plannedTrip.date}
+                    time={plannedTrip.time}
+                    capacity={plannedTrip.capacity}
+                    latitude={plannedTrip.latitude}
+                    longitude={plannedTrip.longitude}
+                  />
+                ))}
           </table>
         </div>
       ) : (

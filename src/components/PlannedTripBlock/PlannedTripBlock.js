@@ -1,5 +1,5 @@
 import "./styles.css";
-import { NavLink } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 export default function PlannedTripBlock(props) {
   return (
@@ -9,7 +9,7 @@ export default function PlannedTripBlock(props) {
       <td>{props.capacity}</td>
       <td>{props.latitude}</td>
       <td>{props.longitude}</td>
-      <td>{<NavLink to="/inscription">book a place</NavLink>}</td>
+      <td>{<NavLink to={`/inscription/${props.id}`}>book a place</NavLink>}</td>
     </tr>
   );
 }
