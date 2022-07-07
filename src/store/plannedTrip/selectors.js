@@ -5,3 +5,8 @@ export const selectplannedTripDetails = (state) =>
   state.plannedTrip.plannedTripDetails;
 
 export const selectScheduledTrips = (state) => state.plannedTrip.scheduledTrips;
+
+export const selectScheduledTripsByUser = (state) =>
+  state.plannedTrip.scheduledTripsbyUser;
+
+export const selectSchools = (state) => state.plannedTrip.schools;

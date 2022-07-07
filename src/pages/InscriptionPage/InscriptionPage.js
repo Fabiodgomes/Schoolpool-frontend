@@ -11,7 +11,10 @@ import {
   fetchAllScheduledTrips,
   makeInscription,
 } from "../../store/plannedTrip/actions";
-import { selectplannedTripDetails } from "../../store/plannedTrip/selectors";
+import {
+  selectplannedTripDetails,
+  selectSchools,
+} from "../../store/plannedTrip/selectors";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
@@ -19,6 +22,7 @@ import { selectToken } from "../../store/user/selectors";
 export const InscriptionPage = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  const schools = useSelector(selectSchools);
   const plannedTripDetails = useSelector(selectplannedTripDetails);
   const { id } = useParams();
   const [numberOfKids, setNumberOfKids] = useState(0);
@@ -27,7 +31,8 @@ export const InscriptionPage = () => {
     dispatch(fetchPlannedTripDetail(id, token));
     dispatch(fetchAllScheduledTrips(token));
   }, [dispatch]);
-  console.log("IIIIDDDDDDDDD", id);
+  console.log("SCHOOOOLS", schools);
+
   return (
     <>
       <div>
@@ -36,10 +41,19 @@ export const InscriptionPage = () => {
             <div>
               <PlannedTripInscription
                 departure={plannedTripDetails.longitude}
-                school={plannedTripDetails.schoolId}
+                school={
+                  schools?.find(
+                    (school) => school.id === plannedTripDetails.schoolId
+                  ).name
+                }
                 date={plannedTripDetails.date}
                 time={plannedTripDetails.time}
                 capacity={plannedTripDetails.capacity}
+                schoolImage={
+                  schools?.find(
+                    (school) => school.id === plannedTripDetails.schoolId
+                  ).imageUrl
+                }
               />
             </div>
             <input

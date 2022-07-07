@@ -7,6 +7,8 @@ import {
   inscription,
   scheduleATrip,
   planATrip,
+  fetchScheduledTripsbyUser,
+  fetchSchools,
 } from "./slice";
 
 export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
@@ -118,3 +120,33 @@ export const newPlannedTrip =
       console.log(error.message);
     }
   };
+
+export const fetchUsersScheduledTrips =
+  (token) => async (dispatch, getState) => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/scheduledtrips/myscheduledtrips`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const scheduledTrips = response.data;
+      console.log("SCHEDULED TRIPS IN ACTIONS", scheduledTrips);
+      dispatch(fetchScheduledTripsbyUser(scheduledTrips));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+export const fetchAllSchools = (token) => async (dispatch, getState) => {
+  try {
+    const response = await axios.get(`${apiUrl}/schools`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const schools = response.data;
+    dispatch(fetchSchools(schools));
+  } catch (error) {
+    console.log(error.message);
+  }
+};

@@ -8,7 +8,7 @@ import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock
 import { selectToken } from "../../store/user/selectors";
 import NewPlannedTrip from "../../components/NewPlannedTrip/NewPlannedTrip";
 
-export const Homepage = () => {
+export const PlannedTrips = () => {
   const dispatch = useDispatch();
   const allPlannedTrips = useSelector(selectAllPlannedTrips);
   const token = useSelector(selectToken);

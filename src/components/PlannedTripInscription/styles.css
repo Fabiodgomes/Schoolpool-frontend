@@ -7,3 +7,21 @@ li {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
+.planned-trip-inscription {
+  display: flex;
+  flex-direction: row;
+}
+.school-image {
+  max-width: 400px;
+}
+
+.image-container {
+  padding-left: 10%;
+  padding-top: 5%;
+}
+
+.planned-trip-inscription-container {
+  padding-left: 2%;
+  padding-top: 5%;
+}

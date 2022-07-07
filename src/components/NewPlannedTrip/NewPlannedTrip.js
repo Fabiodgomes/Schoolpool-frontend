@@ -1,5 +1,10 @@
-import { newPlannedTrip } from "../../store/plannedTrip/actions";
+import {
+  fetchAllSchools,
+  newPlannedTrip,
+} from "../../store/plannedTrip/actions";
+import { useEffect } from "react";
 import { selectToken } from "../../store/user/selectors";
+import { selectSchools } from "../../store/plannedTrip/selectors";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
@@ -14,6 +19,13 @@ export default function NewPlannedTrip() {
   const [transportationTypeId, setTransportationTypeId] = useState("");
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
+  const schools = useSelector(selectSchools);
+
+  useEffect(() => {
+    dispatch(fetchAllSchools(token));
+  }, [dispatch]);
+
+  console.log("SCHOOLS ON FORM", schools);
 
   function submitForm(event) {
     event.preventDefault();
@@ -101,7 +113,7 @@ export default function NewPlannedTrip() {
             required
           />
           <Form.Label>School Id</Form.Label>
-          <Form.Control
+          <Form.Select
             value={schoolId}
             onChange={(event) => {
               setSchoolId(event.target.value);
@@ -109,8 +121,12 @@ export default function NewPlannedTrip() {
             }}
             type="number"
             required
-          />
-          <Form.Label>Trasnportation Type Id</Form.Label>
+          >
+            {schools?.map((school) => (
+              <option value={school.id}>{school.name}</option>
+            ))}
+          </Form.Select>
+          <Form.Label>Transportation Type Id</Form.Label>
           <Form.Control
             value={transportationTypeId}
             onChange={(event) => {
