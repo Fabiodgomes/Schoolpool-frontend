@@ -1,7 +1,7 @@
 export const selectAllPlannedTrips = (state) =>
   state.plannedTrip.allPlannedTrips;
 
-export const selectplannedTripDetails = (state) =>
+export const selectPlannedTripDetails = (state) =>
   state.plannedTrip.plannedTripDetails;
 
 export const selectScheduledTrips = (state) => state.plannedTrip.scheduledTrips;

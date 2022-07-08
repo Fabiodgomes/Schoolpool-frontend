@@ -3,7 +3,7 @@ import "./styles.css";
 export const PlannedTripInscription = (props) => {
   return (
     <>
-      <div className="planned-trip-inscription">
+      <div className="planned-trip-inscription-container">
         <div className="trip">
           <ul>
             <li>

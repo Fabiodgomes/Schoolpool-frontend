@@ -12,7 +12,7 @@ import {
   makeInscription,
 } from "../../store/plannedTrip/actions";
 import {
-  selectplannedTripDetails,
+  selectPlannedTripDetails,
   selectSchools,
 } from "../../store/plannedTrip/selectors";
 import { useState, useEffect } from "react";
@@ -23,7 +23,7 @@ export const InscriptionPage = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const schools = useSelector(selectSchools);
-  const plannedTripDetails = useSelector(selectplannedTripDetails);
+  const plannedTripDetails = useSelector(selectPlannedTripDetails);
   const { id } = useParams();
   const [numberOfKids, setNumberOfKids] = useState(0);
 
