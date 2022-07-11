@@ -9,7 +9,9 @@ import {
   planATrip,
   fetchScheduledTripsbyUser,
   fetchSchools,
+  fetchPlannedTripsbyUser,
 } from "./slice";
+import { showMessageWithTimeout } from "../appState/thunks";
 
 export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
   try {
@@ -146,6 +148,20 @@ export const fetchAllSchools = (token) => async (dispatch, getState) => {
     });
     const schools = response.data;
     dispatch(fetchSchools(schools));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
+  try {
+    const response = await axios.get(`${apiUrl}/plannedtrips/myplannedtrips`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const plannedTrips = response.data;
+    console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
+    dispatch(fetchPlannedTripsbyUser(plannedTrips));
   } catch (error) {
     console.log(error.message);
   }

@@ -6,11 +6,13 @@ import { selectAllPlannedTrips } from "../../store/plannedTrip/selectors";
 import { fetchPlannedTrips } from "../../store/plannedTrip/actions";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { selectToken } from "../../store/user/selectors";
+import { selectSchools } from "../../store/plannedTrip/selectors";
 import NewPlannedTrip from "../../components/NewPlannedTrip/NewPlannedTrip";
 
 export const PlannedTrips = () => {
   const dispatch = useDispatch();
   const allPlannedTrips = useSelector(selectAllPlannedTrips);
+  const schools = useSelector(selectSchools);
   const token = useSelector(selectToken);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export const PlannedTrips = () => {
               <th>Longitude</th>
               <th>Inscription</th>
             </tr>
-            {!allPlannedTrips.length
+            {!allPlannedTrips || !schools
               ? "Loading"
               : allPlannedTrips.map((plannedTrip, i) => (
                   <PlannedTripBlock
@@ -42,6 +44,15 @@ export const PlannedTrips = () => {
                     capacity={plannedTrip.capacity}
                     latitude={plannedTrip.latitude}
                     longitude={plannedTrip.longitude}
+                    school={
+                      schools.find(
+                        (school) =>
+                          school.id ===
+                          allPlannedTrips.find(
+                            (plannedTrip2) => plannedTrip2.id === plannedTrip.id
+                          ).schoolId
+                      ).name
+                    }
                   />
                 ))}
           </table>

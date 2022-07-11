@@ -6,6 +6,7 @@ const initialState = {
   scheduledTrips: null,
   scheduledTripsbyUser: null,
   schools: null,
+  plannedTripsbyUser: null,
 };
 export const plannedTripSlice = createSlice({
   name: "plannedTrip",
@@ -36,6 +37,9 @@ export const plannedTripSlice = createSlice({
     fetchSchools: (state, action) => {
       state.schools = action.payload;
     },
+    fetchPlannedTripsbyUser: (state, action) => {
+      state.plannedTripsbyUser = action.payload;
+    },
   },
 });
 
@@ -48,6 +52,7 @@ export const {
   planATrip,
   fetchScheduledTripsbyUser,
   fetchSchools,
+  fetchPlannedTripsbyUser,
 } = plannedTripSlice.actions;
 
 export default plannedTripSlice.reducer;

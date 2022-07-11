@@ -8,6 +8,7 @@ import { selectSchools } from "../../store/plannedTrip/selectors";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
+import { showMessageWithTimeout } from "../../store/appState/thunks";
 
 export default function NewPlannedTrip() {
   const [date, setDate] = useState("");
@@ -54,13 +55,21 @@ export default function NewPlannedTrip() {
           transportationTypeId
         )
       );
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          true,
+          "Your planned trip has been created successfully",
+          2000
+        )
+      );
     }
   }
 
   return (
     <Container>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h5 className="mt-5 mb-5">Make a bid</h5>
+        <h3 className="mt-5 mb-5">Plan a Trip</h3>
         <Form.Group controlId="formBasicName">
           <Form.Label>Date</Form.Label>
           <Form.Control

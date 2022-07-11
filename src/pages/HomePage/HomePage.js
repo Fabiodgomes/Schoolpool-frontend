@@ -3,6 +3,7 @@ import {
   selectScheduledTripsByUser,
   selectAllPlannedTrips,
   selectSchools,
+  selectPlannedTripsByUser,
 } from "../../store/plannedTrip/selectors";
 import { useEffect } from "react";
 import { fetchUsersScheduledTrips } from "../../store/plannedTrip/actions";
@@ -12,11 +13,14 @@ import ScheduledTripBlock from "../../components/ScheduledTripBlock/ScheduledTri
 import {
   fetchPlannedTrips,
   fetchAllSchools,
+  fetchUsersPlannedTrips,
 } from "../../store/plannedTrip/actions";
+import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
   const scheduledTripsbyUser = useSelector(selectScheduledTripsByUser);
+  const plannedTripsByUser = useSelector(selectPlannedTripsByUser);
   const plannedTrips = useSelector(selectAllPlannedTrips);
   const schools = useSelector(selectSchools);
   console.log("SCHEDULEDTRIPSBYUSER", scheduledTripsbyUser);
@@ -26,22 +30,16 @@ export const HomePage = () => {
     dispatch(fetchUsersScheduledTrips(token));
     dispatch(fetchPlannedTrips(token));
     dispatch(fetchAllSchools(token));
+    dispatch(fetchUsersPlannedTrips(token));
   }, [dispatch]);
 
-  // const schoolName = (plannedTripId) => {
-  //   schools?.find(
-  //     (school) =>
-  //       school.id ===
-  //       plannedTrips?.find((plannedTrip) => plannedTrip.id === plannedTripId)
-  //         .schoolId
-  //   ).name;
-  // };
   console.log("PLANNED TRIPS", plannedTrips);
   console.log("SCHOOLS", schools);
   return (
     <>
       {token ? (
         <div className="tableContainer">
+          <h1>My kids are registered in the following trips</h1>
           <table>
             <tr>
               <th>Number Of Kids</th>
@@ -78,6 +76,41 @@ export const HomePage = () => {
                           plannedTrips.find(
                             (plannedTrip) =>
                               plannedTrip.id === scheduledTrip.plannedTripId
+                          ).schoolId
+                      ).name
+                    }
+                  />
+                ))}
+          </table>
+          <h1>I am the accompanying person in the following trips</h1>
+          <table>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Capacity</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>School</th>
+              <th>Inscription</th>
+            </tr>
+
+            {!plannedTripsByUser || !plannedTrips || !schools
+              ? "Loading"
+              : plannedTripsByUser.map((plannedTrip, i) => (
+                  <PlannedTripBlock
+                    key={i}
+                    id={plannedTrip.id}
+                    date={plannedTrip.date}
+                    time={plannedTrip.time}
+                    capacity={plannedTrip.capacity}
+                    latitude={plannedTrip.latitude}
+                    longitude={plannedTrip.longitude}
+                    school={
+                      schools.find(
+                        (school) =>
+                          school.id ===
+                          plannedTrips.find(
+                            (plannedTrip2) => plannedTrip2.id === plannedTrip.id
                           ).schoolId
                       ).name
                     }
