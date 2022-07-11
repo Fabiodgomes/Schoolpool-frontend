@@ -31,24 +31,6 @@ export function Leaflet() {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
-      <Marker
-        key={"school"}
-        position={["52.361483166361666", "4.936166340458636"]}
-      >
-        <Popup>
-          <img
-            alt={"yeah"}
-            style={{ width: "100px", borderRadius: "0.5em" }}
-            src={
-              "https://www.watjijwilt.amsterdam/wp-content/uploads/2019/11/Multatuli-1.jpg"
-            }
-          />
-          <p>
-            {"TEEST"} {"Trying"}
-          </p>
-        </Popup>
-      </Marker>
     </MapContainer>
   );
 }

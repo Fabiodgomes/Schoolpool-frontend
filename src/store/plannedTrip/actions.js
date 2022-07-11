@@ -10,6 +10,7 @@ import {
   fetchScheduledTripsbyUser,
   fetchSchools,
   fetchPlannedTripsbyUser,
+  fetchOneSchool,
 } from "./slice";
 import { showMessageWithTimeout } from "../appState/thunks";
 
@@ -162,6 +163,23 @@ export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
     const plannedTrips = response.data;
     console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
     dispatch(fetchPlannedTripsbyUser(plannedTrips));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchSchoolDetails = (token) => async (dispatch, getState) => {
+  try {
+    // const id = getState().data;
+    // console.log("GET STATE", getState().plannedTrip?.plannedTripDetails);
+    // // console.log("ID IN ACTIONS", id);
+    const response = await axios.get(`${apiUrl}/schools/${1}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("GET STATE", getState());
+
+    const schoolDetails = response.data;
+    dispatch(fetchOneSchool(schoolDetails));
   } catch (error) {
     console.log(error.message);
   }

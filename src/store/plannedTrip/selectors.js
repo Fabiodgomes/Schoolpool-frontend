@@ -13,3 +13,5 @@ export const selectSchools = (state) => state.plannedTrip.schools;
 
 export const selectPlannedTripsByUser = (state) =>
   state.plannedTrip.plannedTripsbyUser;
+
+export const selectSchoolDetails = (state) => state.plannedTrip.schoolDetails;

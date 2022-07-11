@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
 import { showMessageWithTimeout } from "../../store/appState/thunks";
+import { Leaflet } from "../Leaflet/Leaflet";
 
 export default function NewPlannedTrip() {
   const [date, setDate] = useState("");
@@ -145,6 +146,7 @@ export default function NewPlannedTrip() {
             type="number"
             required
           />
+          <Leaflet />
         </Form.Group>
         <Form.Group className="mt-5">
           <Button variant="primary" type="submit" onClick={submitForm}>
