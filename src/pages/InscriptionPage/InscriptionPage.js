@@ -31,11 +31,11 @@ export const InscriptionPage = () => {
     dispatch(fetchPlannedTripDetail(id, token));
     dispatch(fetchAllScheduledTrips(token));
     dispatch(fetchAllSchools(token));
-    dispatch(fetchSchoolDetails(token));
+    // dispatch(fetchSchoolDetails(token));
   }, [dispatch]);
-  console.log("SCHOOOOLS", schools);
-  console.log("PLANNED TRIPS", plannedTripDetails);
-  console.log("SCHOOL DETAILS", schoolDetails);
+  // console.log("SCHOOOOLS", schools);
+  // console.log("PLANNED TRIPS", plannedTripDetails);
+  // console.log("SCHOOL DETAILS", schoolDetails);
 
   return (
     <>
@@ -92,3 +92,5 @@ export const InscriptionPage = () => {
     </>
   );
 };
+
+// schoolDetails={schoolDetails}

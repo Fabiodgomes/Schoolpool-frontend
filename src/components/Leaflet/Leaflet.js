@@ -1,6 +1,18 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { LocationOnClick } from "../LocationOnClick/LocationOnClick";
 
-export function Leaflet() {
+export function Leaflet(props) {
+  // const map = useMap();
+
+  // useEffect(() => {
+  //   if (map) {
+  //     map.on("click", function (e) {
+  //       alert(e.latlng);
+  //     });
+  //   }
+  // }, [map]);
+
   return (
     <MapContainer
       style={{
@@ -27,10 +39,41 @@ export function Leaflet() {
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""
       ></script>
+      <LocationOnClick />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      {/* {props.schoolDetails?.map((schoolD) => (
+        <Marker
+          key={schoolD.id}
+          position={[schoolD.latitude, schoolD.longitude]}
+        >
+          {" "}
+        </Marker>
+      ))} */}
     </MapContainer>
   );
+}
+
+// {
+//  {schoolDetails?.map((schoolD) => (
+//                 <Marker
+//                   key={schoolD.id}
+//                   position={[schoolD.latitude, schoolD.longitude]}
+//                 >
+// }
+{
+  /* <Popup>
+                    <img
+                      alt={schoolD.name}
+                      style={{ width: "100px", borderRadius: "0.5em" }}
+                      src={schoolD.imageUrl}
+                    />
+                    <p>{schoolD.name}</p>
+                  </Popup> */
+}
+{
+  /* </Marker>
+              ))} */
 }
