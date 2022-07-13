@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectScheduledTripsByUser,
@@ -36,13 +37,20 @@ export const HomePage = () => {
   console.log("SCHOOLS", schools);
   console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
   console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
+
+  const sortedTripsByDate =
+    plannedTrips &&
+    [...plannedTrips].sort((a, b) => {
+      return b.date - a.date;
+    });
+
   return (
     <>
       {token ? (
         <div className="tableContainer">
           <h1>My kids are registered in the following trips</h1>
-          <table>
-            <tr>
+          <table className="table">
+            <tr className="table-head-row">
               <th>Number Of Kids</th>
               <th>Date</th>
               <th>Time</th>

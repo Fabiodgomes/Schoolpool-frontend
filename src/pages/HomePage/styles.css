@@ -1,0 +1,9 @@
+/* .table {
+  border-bottom: 2px solid black;
+} */
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}

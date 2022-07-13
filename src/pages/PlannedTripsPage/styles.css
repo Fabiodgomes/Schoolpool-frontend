@@ -2,3 +2,6 @@
   display: flex;
   flex-direction: column;
 }
+/* tr {
+  border-bottom: 5pt solid black;
+} */

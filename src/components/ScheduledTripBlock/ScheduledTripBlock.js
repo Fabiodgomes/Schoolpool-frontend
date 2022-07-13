@@ -4,6 +4,7 @@ import moment from "moment";
 
 export default function ScheduledTripBlock(props) {
   const date = moment(props.date).format("ddd DD MMMM YYYY");
+
   return (
     <tr>
       <td>{props.numberOfKids}</td>

@@ -64,6 +64,13 @@ export default function NewPlannedTrip() {
           transportationTypeId
         )
       );
+      setDate("");
+      setTime("");
+      setCapacity("");
+      setLatitude("");
+      setLongitude("");
+      setSchoolId(1);
+      setTransportationTypeId("");
     }
   }
 

@@ -24,7 +24,7 @@ export const PlannedTrips = () => {
     <>
       {token ? (
         <div className="tableContainer">
-          <table>
+          <table className="table">
             <tr>
               <th>Date</th>
               <th>Time</th>
@@ -36,26 +36,31 @@ export const PlannedTrips = () => {
             </tr>
             {!allPlannedTrips || !schools
               ? "Loading"
-              : allPlannedTrips.map((plannedTrip, i) => (
-                  <PlannedTripBlock
-                    key={i}
-                    id={plannedTrip.id}
-                    date={plannedTrip.date}
-                    time={plannedTrip.time}
-                    capacity={plannedTrip.capacity}
-                    latitude={plannedTrip.latitude}
-                    longitude={plannedTrip.longitude}
-                    school={
-                      schools.find(
-                        (school) =>
-                          school.id ===
-                          allPlannedTrips.find(
-                            (plannedTrip2) => plannedTrip2.id === plannedTrip.id
-                          ).schoolId
-                      ).name
-                    }
-                  />
-                ))}
+              : allPlannedTrips
+                  .filter(
+                    (plannedTripCapacity) => plannedTripCapacity.capacity !== 0
+                  )
+                  .map((plannedTrip, i) => (
+                    <PlannedTripBlock
+                      key={i}
+                      id={plannedTrip.id}
+                      date={plannedTrip.date}
+                      time={plannedTrip.time}
+                      capacity={plannedTrip.capacity}
+                      latitude={plannedTrip.latitude}
+                      longitude={plannedTrip.longitude}
+                      school={
+                        schools.find(
+                          (school) =>
+                            school.id ===
+                            allPlannedTrips.find(
+                              (plannedTrip2) =>
+                                plannedTrip2.id === plannedTrip.id
+                            ).schoolId
+                        ).name
+                      }
+                    />
+                  ))}
           </table>
           <NewPlannedTrip />
         </div>

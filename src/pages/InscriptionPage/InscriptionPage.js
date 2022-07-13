@@ -46,7 +46,7 @@ export const InscriptionPage = () => {
   console.log("PLANNED TRIPS", plannedTripDetails);
   // console.log("SCHOOL DETAILS", schoolDetails);
 
-  const capacity = plannedTripDetails.capacity;
+  // const capacity = plannedTripDetails.capacity;
 
   function LocationOnClick() {
     const map = useMapEvents({
@@ -59,6 +59,12 @@ export const InscriptionPage = () => {
     });
     return null;
   }
+
+  const resetFields = () => {
+    setNumberOfKids("");
+    setLatitude("");
+    setLongitude("");
+  };
 
   return (
     <>
@@ -116,10 +122,11 @@ export const InscriptionPage = () => {
                     token,
                     numberOfKids,
                     latitude,
-                    longitude,
-                    capacity
+                    longitude
+                    // capacity
                   )
                 );
+                resetFields();
               }}
             >
               Book
