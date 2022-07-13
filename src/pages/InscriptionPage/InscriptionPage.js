@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import { showMessageWithTimeout } from "../../store/appState/thunks";
-// import { LocationOnClick } from "../../components/LocationOnClick/LocationOnClick";
+
 import {
   MapContainer,
   TileLayer,
@@ -24,7 +24,6 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import { LocationOnClick } from "../../components/LocationOnClick/LocationOnClick";
 
 export const InscriptionPage = () => {
   const dispatch = useDispatch();
