@@ -35,6 +35,7 @@ export const HomePage = () => {
 
   console.log("PLANNED TRIPS", plannedTrips);
   console.log("SCHOOLS", schools);
+  console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
   return (
     <>
       {token ? (

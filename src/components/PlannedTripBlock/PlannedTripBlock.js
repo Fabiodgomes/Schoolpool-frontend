@@ -4,7 +4,7 @@ import moment from "moment";
 
 export default function PlannedTripBlock(props) {
   const date = moment(props.date).format("ddd DD MMMM YYYY");
-  console.log("DATE", date);
+  // console.log("DATE", date);
   return (
     <tr>
       <td>{date}</td>

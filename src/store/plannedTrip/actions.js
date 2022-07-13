@@ -62,11 +62,12 @@ export const fetchAllScheduledTrips = (token) => async (dispatch, getState) => {
 };
 
 export const makeInscription =
-  (id, token, numberOfKids) => async (dispatch, getState) => {
+  (id, token, numberOfKids, latitude, longitude) =>
+  async (dispatch, getState) => {
     try {
       const response = await axios.patch(
         `${apiUrl}/plannedtrips/${id}/inscription`,
-        { numberOfKids },
+        { numberOfKids, latitude, longitude },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -76,6 +77,8 @@ export const makeInscription =
       dispatch(
         scheduleATrip({
           numberOfKids: numberOfKids,
+          latitude: latitude,
+          longitude: longitude,
           plannedTripId: id,
           userId: getState().user.user.id,
         })

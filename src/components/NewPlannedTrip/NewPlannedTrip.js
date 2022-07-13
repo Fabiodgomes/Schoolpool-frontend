@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
 import { showMessageWithTimeout } from "../../store/appState/thunks";
 import { Leaflet } from "../Leaflet/Leaflet";
+import { LocationOnClick } from "../LocationOnClick/LocationOnClick";
 
 export default function NewPlannedTrip() {
   const [date, setDate] = useState("");
@@ -27,7 +28,7 @@ export default function NewPlannedTrip() {
     dispatch(fetchAllSchools(token));
   }, [dispatch]);
 
-  console.log("SCHOOLS ON FORM", schools);
+  // console.log("SCHOOLS ON FORM", schools);
 
   function submitForm(event) {
     event.preventDefault();
@@ -77,7 +78,7 @@ export default function NewPlannedTrip() {
             value={date}
             onChange={(event) => {
               setDate(event.target.value);
-              console.log("SET DATE", event.target.value);
+              // console.log("SET DATE", event.target.value);
             }}
             type="date"
             required
@@ -87,7 +88,7 @@ export default function NewPlannedTrip() {
             value={time}
             onChange={(event) => {
               setTime(event.target.value);
-              console.log("SET TIME", event.target.value);
+              // console.log("SET TIME", event.target.value);
             }}
             type="time"
             required
@@ -97,7 +98,7 @@ export default function NewPlannedTrip() {
             value={parseInt(capacity)}
             onChange={(event) => {
               setCapacity(event.target.value);
-              console.log("SET CAPACITY", event.target.value);
+              // console.log("SET CAPACITY", event.target.value);
             }}
             type="number"
             required
@@ -107,7 +108,7 @@ export default function NewPlannedTrip() {
             value={latitude}
             onChange={(event) => {
               setLatitude(event.target.value);
-              console.log("SET Latitude", event.target.value);
+              // console.log("SET Latitude", event.target.value);
             }}
             type="string"
             required
@@ -117,7 +118,7 @@ export default function NewPlannedTrip() {
             value={longitude}
             onChange={(event) => {
               setLongitude(event.target.value);
-              console.log("SET longitude", event.target.value);
+              // console.log("SET longitude", event.target.value);
             }}
             type="string"
             required
@@ -127,7 +128,7 @@ export default function NewPlannedTrip() {
             value={schoolId}
             onChange={(event) => {
               setSchoolId(event.target.value);
-              console.log("SET school Id", event.target.value);
+              // console.log("SET school Id", event.target.value);
             }}
             type="number"
             required
@@ -141,12 +142,12 @@ export default function NewPlannedTrip() {
             value={transportationTypeId}
             onChange={(event) => {
               setTransportationTypeId(event.target.value);
-              console.log("SET transportation type Id", event.target.value);
+              // console.log("SET transportation type Id", event.target.value);
             }}
             type="number"
             required
           />
-          <Leaflet />
+          <Leaflet locationOnClick={<LocationOnClick />} />
         </Form.Group>
         <Form.Group className="mt-5">
           <Button variant="primary" type="submit" onClick={submitForm}>

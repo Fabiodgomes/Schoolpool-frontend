@@ -19,7 +19,7 @@ export const PlannedTrips = () => {
     dispatch(fetchPlannedTrips(token));
   }, [dispatch]);
 
-  console.log("allPLannedTrips", allPlannedTrips);
+  // console.log("allPLannedTrips", allPlannedTrips);
   return (
     <>
       {token ? (

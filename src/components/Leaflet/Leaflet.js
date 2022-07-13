@@ -1,18 +1,9 @@
 import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { LocationOnClick } from "../LocationOnClick/LocationOnClick";
+import { ShowRoute } from "../ShowRoute/ShowRoute";
 
 export function Leaflet(props) {
-  // const map = useMap();
-
-  // useEffect(() => {
-  //   if (map) {
-  //     map.on("click", function (e) {
-  //       alert(e.latlng);
-  //     });
-  //   }
-  // }, [map]);
-
   return (
     <MapContainer
       style={{
@@ -34,12 +25,19 @@ export function Leaflet(props) {
         integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
         crossorigin=""
       />
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
+      />
       <script
         src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""
       ></script>
-      <LocationOnClick />
+      <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+      {props.locationOnClick}
+      {/* <ShowRoute points={[lat, lng],[lat,lng],..} /> */}
+
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
