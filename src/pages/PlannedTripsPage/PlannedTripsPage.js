@@ -31,6 +31,7 @@ export const PlannedTrips = () => {
               <th>Capacity</th>
               <th>Latitude</th>
               <th>Longitude</th>
+              <th>School</th>
               <th>Inscription</th>
             </tr>
             {!allPlannedTrips || !schools

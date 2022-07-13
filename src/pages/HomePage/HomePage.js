@@ -30,12 +30,12 @@ export const HomePage = () => {
     dispatch(fetchUsersScheduledTrips(token));
     dispatch(fetchPlannedTrips(token));
     dispatch(fetchAllSchools(token));
-    dispatch(fetchUsersPlannedTrips(token));
   }, [dispatch]);
 
   console.log("PLANNED TRIPS", plannedTrips);
   console.log("SCHOOLS", schools);
   console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
+  console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
   return (
     <>
       {token ? (
@@ -50,7 +50,10 @@ export const HomePage = () => {
               <th>School</th>
               <th>Inscription</th>
             </tr>
-            {!scheduledTripsbyUser || !plannedTrips || !schools
+            {!scheduledTripsbyUser ||
+            !plannedTrips ||
+            !schools ||
+            !plannedTripsByUser
               ? "Loading"
               : scheduledTripsbyUser.map((scheduledTrip, i) => (
                   <ScheduledTripBlock

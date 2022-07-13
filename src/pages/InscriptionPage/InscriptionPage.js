@@ -5,7 +5,6 @@ import {
   fetchAllScheduledTrips,
   makeInscription,
   fetchAllSchools,
-  fetchSchoolDetails,
 } from "../../store/plannedTrip/actions";
 import {
   selectPlannedTripDetails,
@@ -16,7 +15,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import { showMessageWithTimeout } from "../../store/appState/thunks";
-
+import { ShowRoute } from "../../components/ShowRoute/ShowRoute";
 import {
   MapContainer,
   TileLayer,
@@ -44,7 +43,7 @@ export const InscriptionPage = () => {
     dispatch(fetchAllSchools(token));
   }, [dispatch]);
   // console.log("SCHOOOOLS", schools);
-  // console.log("PLANNED TRIPS", plannedTripDetails);
+  console.log("PLANNED TRIPS", plannedTripDetails);
   // console.log("SCHOOL DETAILS", schoolDetails);
 
   function LocationOnClick() {
@@ -154,20 +153,38 @@ export const InscriptionPage = () => {
                 crossorigin=""
               ></script>
               <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-              {/* <ShowRoute points={[lat, lng],[lat,lng],..} /> */}
+              <ShowRoute
+                points={
+                  latitude && longitude
+                    ? [
+                        [
+                          plannedTripDetails.latitude,
+                          plannedTripDetails.longitude,
+                        ],
+                        [latitude, longitude],
+                        [schoolDetails.latitude, schoolDetails.longitude],
+                      ]
+                    : [
+                        [
+                          plannedTripDetails.latitude,
+                          plannedTripDetails.longitude,
+                        ],
+                        [schoolDetails.latitude, schoolDetails.longitude],
+                      ]
+                }
+              />
               <LocationOnClick />
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {/* {props.schoolDetails?.map((schoolD) => (
-        <Marker
-          key={schoolD.id}
-          position={[schoolD.latitude, schoolD.longitude]}
-        >
-          {" "}
-        </Marker>
-      ))} */}
+
+              <Marker
+                key={schoolDetails.id}
+                position={[schoolDetails.latitude, schoolDetails.longitude]}
+              >
+                {" "}
+              </Marker>
             </MapContainer>
           </div>
         ) : (

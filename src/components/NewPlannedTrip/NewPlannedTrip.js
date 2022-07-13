@@ -24,7 +24,7 @@ export default function NewPlannedTrip() {
   const [capacity, setCapacity] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [schoolId, setSchoolId] = useState("");
+  const [schoolId, setSchoolId] = useState(1);
   const [transportationTypeId, setTransportationTypeId] = useState("");
   const token = useSelector(selectToken);
   const dispatch = useDispatch();

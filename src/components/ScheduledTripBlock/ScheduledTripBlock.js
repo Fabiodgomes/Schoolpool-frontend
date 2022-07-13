@@ -14,7 +14,7 @@ export default function ScheduledTripBlock(props) {
       <td>
         {
           <NavLink to={`/inscription/${props.plannedTripId}`}>
-            book a place
+            Check Availibility
           </NavLink>
         }
       </td>

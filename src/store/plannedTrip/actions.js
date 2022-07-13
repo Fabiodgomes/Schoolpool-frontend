@@ -21,6 +21,15 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
     });
     const plannedTrips = response.data;
     dispatch(fetchAllPlannedTrips(plannedTrips));
+
+    const usersTripsResponse = await axios.get(
+      `${apiUrl}/plannedtrips/myplannedtrips`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const usersPlannedTrips = usersTripsResponse.data;
+    dispatch(fetchPlannedTripsbyUser(usersPlannedTrips));
   } catch (error) {
     console.log(error.message);
   }
@@ -42,6 +51,16 @@ export const fetchPlannedTripDetail =
       });
       const schoolDetails = schoolResponse.data;
       dispatch(fetchOneSchool(schoolDetails));
+
+      const usersTripsResponse = await axios.get(
+        `${apiUrl}/plannedtrips/myplannedtrips`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const usersPlannedTrips = usersTripsResponse.data;
+      dispatch(fetchPlannedTripsbyUser(usersPlannedTrips));
+
       console.log("SCHOOL DETAILS", schoolDetails);
     } catch (error) {
       console.log(error.message);
@@ -183,7 +202,7 @@ export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
 export const fetchSchoolDetails = (token) => async (dispatch, getState) => {
   try {
     const id = getState().plannedTrip.plannedTripDetails.schoolId;
-    console.log("GET STATE", id);
+    // console.log("GET STATE", id);
 
     const response = await axios.get(`${apiUrl}/schools/${1}`, {
       headers: { Authorization: `Bearer ${token}` },

@@ -13,7 +13,11 @@ export default function PlannedTripBlock(props) {
       <td>{props.latitude}</td>
       <td>{props.longitude}</td>
       <td>{props.school}</td>
-      <td>{<NavLink to={`/inscription/${props.id}`}>book a place</NavLink>}</td>
+      <td>
+        {props.capacity > 0 ? (
+          <NavLink to={`/inscription/${props.id}`}>book a place</NavLink>
+        ) : null}
+      </td>
     </tr>
   );
 }
