@@ -17,6 +17,7 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import { ShowRoute } from "../ShowRoute/ShowRoute";
 
 export default function NewPlannedTrip() {
   const [date, setDate] = useState("");
@@ -26,6 +27,8 @@ export default function NewPlannedTrip() {
   const [longitude, setLongitude] = useState("");
   const [schoolId, setSchoolId] = useState(1);
   const [transportationTypeId, setTransportationTypeId] = useState("");
+  const [schoolLatitude, setSchoolLatitude] = useState("");
+  const [schoolLongitude, setSchoolLongitude] = useState("");
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
   const schools = useSelector(selectSchools);
@@ -146,6 +149,18 @@ export default function NewPlannedTrip() {
             value={schoolId}
             onChange={(event) => {
               setSchoolId(event.target.value);
+              setSchoolLatitude(
+                schools.find((school) => school.id == schoolId).latitude
+              );
+              setSchoolLongitude(
+                schools.find((school) => school.id == schoolId).longitude
+              );
+              console.log(
+                "SCHOOL LAT AND LONG",
+                schoolLatitude,
+                schoolLongitude
+              );
+
               // console.log("SET school Id", event.target.value);
             }}
             type="number"
@@ -200,6 +215,12 @@ export default function NewPlannedTrip() {
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <ShowRoute
+              points={[
+                [latitude, longitude],
+                [schoolLatitude, schoolLongitude],
+              ]}
             />
             {/* {props.schoolDetails?.map((schoolD) => (
         <Marker
