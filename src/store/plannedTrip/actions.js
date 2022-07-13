@@ -81,8 +81,28 @@ export const fetchAllScheduledTrips = (token) => async (dispatch, getState) => {
 };
 
 export const makeInscription =
-  (id, token, numberOfKids, latitude, longitude) =>
+  (id, token, numberOfKids, latitude, longitude, capacity) =>
   async (dispatch, getState) => {
+    if (numberOfKids > capacity) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `You are trying to register ${numberOfKids} kid(s) and there's only ${capacity} spot(s) left`,
+          3000
+        )
+      );
+    }
+    if (!latitude || !longitude) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `You have to provide a pick point`,
+          3000
+        )
+      );
+    }
     try {
       const response = await axios.patch(
         `${apiUrl}/plannedtrips/${id}/inscription`,
@@ -101,6 +121,14 @@ export const makeInscription =
           plannedTripId: id,
           userId: getState().user.user.id,
         })
+      );
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          true,
+          `${numberOfKids} kid(s) registered on the trip`,
+          3000
+        )
       );
     } catch (error) {
       console.log(error.message);

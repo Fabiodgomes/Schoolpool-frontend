@@ -8,8 +8,6 @@ import { selectSchools } from "../../store/plannedTrip/selectors";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
-import { showMessageWithTimeout } from "../../store/appState/thunks";
-import { Leaflet } from "../Leaflet/Leaflet";
 import {
   MapContainer,
   TileLayer,
@@ -64,14 +62,6 @@ export default function NewPlannedTrip() {
           longitude,
           schoolId,
           transportationTypeId
-        )
-      );
-      dispatch(
-        showMessageWithTimeout(
-          "success",
-          true,
-          "Your planned trip has been created successfully",
-          2000
         )
       );
     }

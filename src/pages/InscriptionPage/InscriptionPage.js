@@ -46,6 +46,8 @@ export const InscriptionPage = () => {
   console.log("PLANNED TRIPS", plannedTripDetails);
   // console.log("SCHOOL DETAILS", schoolDetails);
 
+  const capacity = plannedTripDetails.capacity;
+
   function LocationOnClick() {
     const map = useMapEvents({
       click: (event) => {
@@ -109,14 +111,13 @@ export const InscriptionPage = () => {
               type="submit"
               onClick={() => {
                 dispatch(
-                  makeInscription(id, token, numberOfKids, latitude, longitude)
-                );
-                dispatch(
-                  showMessageWithTimeout(
-                    "success",
-                    true,
-                    `${numberOfKids} kid(s) registered on the trip`,
-                    2000
+                  makeInscription(
+                    id,
+                    token,
+                    numberOfKids,
+                    latitude,
+                    longitude,
+                    capacity
                   )
                 );
               }}
