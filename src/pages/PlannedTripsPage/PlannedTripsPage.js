@@ -19,6 +19,22 @@ export const PlannedTrips = () => {
     dispatch(fetchPlannedTrips(token));
   }, [dispatch]);
 
+  const convertDate =
+    allPlannedTrips &&
+    allPlannedTrips.map((plannedTrip) => {
+      return { ...plannedTrip, date: new Date(plannedTrip.date) };
+    });
+  console.log("CONVERTED DATE", convertDate);
+
+  const sortedTrips =
+    allPlannedTrips &&
+    convertDate &&
+    [...convertDate].sort((a, b) => {
+      return Number(a.date) - Number(b.date);
+    });
+
+  console.log("SORTED TRIPS", sortedTrips);
+
   // console.log("allPLannedTrips", allPlannedTrips);
   return (
     <>
@@ -29,33 +45,30 @@ export const PlannedTrips = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Capacity</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
+              <th>Address</th>
               <th>School</th>
               <th>Inscription</th>
             </tr>
-            {!allPlannedTrips || !schools
+            {!allPlannedTrips || !sortedTrips || !schools
               ? "Loading"
-              : allPlannedTrips
+              : sortedTrips
                   .filter(
                     (plannedTripCapacity) => plannedTripCapacity.capacity !== 0
                   )
-                  .map((plannedTrip, i) => (
+                  .map((sortedTrip, i) => (
                     <PlannedTripBlock
                       key={i}
-                      id={plannedTrip.id}
-                      date={plannedTrip.date}
-                      time={plannedTrip.time}
-                      capacity={plannedTrip.capacity}
-                      latitude={plannedTrip.latitude}
-                      longitude={plannedTrip.longitude}
+                      id={sortedTrip.id}
+                      date={sortedTrip.date}
+                      time={sortedTrip.time}
+                      adress={sortedTrip.address}
+                      capacity={sortedTrip.capacity}
                       school={
                         schools.find(
                           (school) =>
                             school.id ===
-                            allPlannedTrips.find(
-                              (plannedTrip2) =>
-                                plannedTrip2.id === plannedTrip.id
+                            sortedTrips.find(
+                              (sortedTrip2) => sortedTrip2.id === sortedTrip.id
                             ).schoolId
                         ).name
                       }

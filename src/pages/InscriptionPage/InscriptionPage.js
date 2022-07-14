@@ -46,7 +46,7 @@ export const InscriptionPage = () => {
   console.log("PLANNED TRIPS", plannedTripDetails);
   // console.log("SCHOOL DETAILS", schoolDetails);
 
-  // const capacity = plannedTripDetails.capacity;
+  const capacity = plannedTripDetails?.capacity;
 
   function LocationOnClick() {
     const map = useMapEvents({
@@ -122,8 +122,8 @@ export const InscriptionPage = () => {
                     token,
                     numberOfKids,
                     latitude,
-                    longitude
-                    // capacity
+                    longitude,
+                    capacity
                   )
                 );
                 resetFields();

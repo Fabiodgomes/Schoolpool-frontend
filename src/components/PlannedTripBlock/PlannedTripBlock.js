@@ -10,8 +10,7 @@ export default function PlannedTripBlock(props) {
       <td>{date}</td>
       <td>{props.time}</td>
       <td>{props.capacity}</td>
-      <td>{props.latitude}</td>
-      <td>{props.longitude}</td>
+      <td>{props.address}</td>
       <td>{props.school}</td>
       <td>
         {props.capacity > 0 ? (

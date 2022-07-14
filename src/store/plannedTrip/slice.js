@@ -58,6 +58,7 @@ export const {
   fetchSchools,
   fetchPlannedTripsbyUser,
   fetchOneSchool,
+  reverseCoordinatesToAdress,
 } = plannedTripSlice.actions;
 
 export default plannedTripSlice.reducer;

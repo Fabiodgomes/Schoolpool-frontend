@@ -1,5 +1,6 @@
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import {
   selectScheduledTripsByUser,
   selectAllPlannedTrips,
@@ -24,8 +25,8 @@ export const HomePage = () => {
   const plannedTripsByUser = useSelector(selectPlannedTripsByUser);
   const plannedTrips = useSelector(selectAllPlannedTrips);
   const schools = useSelector(selectSchools);
-  console.log("SCHEDULEDTRIPSBYUSER", scheduledTripsbyUser);
   const token = useSelector(selectToken);
+  const [selectedDate, setSelectedDate] = useState(1);
 
   useEffect(() => {
     dispatch(fetchUsersScheduledTrips(token));
@@ -33,17 +34,58 @@ export const HomePage = () => {
     dispatch(fetchAllSchools(token));
   }, [dispatch]);
 
-  console.log("PLANNED TRIPS", plannedTrips);
-  console.log("SCHOOLS", schools);
-  console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
-  console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
+  // console.log("PLANNED TRIPS", plannedTrips);
+  // console.log("SCHOOLS", schools);
+  // console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
+  // console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
 
-  const sortedTripsByDate =
-    plannedTrips &&
-    [...plannedTrips].sort((a, b) => {
-      return b.date - a.date;
+  const convertDate =
+    plannedTripsByUser &&
+    plannedTripsByUser.map((plannedTrip) => {
+      return { ...plannedTrip, date: new Date(plannedTrip.date) };
+    });
+  console.log("CONVERTED DATE", convertDate);
+
+  const sortedPlannedTripsByUser =
+    plannedTripsByUser &&
+    convertDate &&
+    [...convertDate].sort((a, b) => {
+      return Number(a.date) - Number(b.date);
     });
 
+  console.log("SORTED TRIPS", sortedPlannedTripsByUser);
+
+  const filteredTripsById = () => {
+    if (plannedTripsByUser) {
+      if (selectedDate.length === 0) {
+        return plannedTripsByUser;
+      } else {
+        return plannedTripsByUser.filter((plannedTrip) =>
+          selectedDate.includes(plannedTripsByUser.id)
+        );
+      }
+    } else {
+      return null;
+    }
+  };
+
+  // const fetchReverseGeoCode = async (latitude, longitude) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+  //     );
+  //     console.log(
+  //       "RESPONSE",
+  //       response?.data.features[0].properties.address_line2
+  //     );
+  //     const address = response?.data.features[0].properties.address_line2;
+
+  //     return address;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+  // console.log("FILTERED TRIPS BY ID", filteredTripsById());
   return (
     <>
       {token ? (
@@ -100,23 +142,21 @@ export const HomePage = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Capacity</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
+              <th>Starting adress</th>
               <th>School</th>
               <th>Inscription</th>
             </tr>
 
             {!plannedTripsByUser || !plannedTrips || !schools
               ? "Loading"
-              : plannedTripsByUser.map((plannedTrip, i) => (
+              : sortedPlannedTripsByUser.map((plannedTrip, i) => (
                   <PlannedTripBlock
                     key={i}
                     id={plannedTrip.id}
                     date={plannedTrip.date}
                     time={plannedTrip.time}
                     capacity={plannedTrip.capacity}
-                    latitude={plannedTrip.latitude}
-                    longitude={plannedTrip.longitude}
+                    address={plannedTrip.address}
                     school={
                       schools.find(
                         (school) =>

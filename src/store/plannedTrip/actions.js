@@ -20,6 +20,21 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const plannedTrips = response.data;
+
+    console.log("PLANNED TRIPS", plannedTrips);
+
+    // const decodeAddress = await Promise.all(
+    //   plannedTrips.map(async (plannedTrip) => {
+    //     const addressResponse = await axios.get(
+    //       `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+    //     );
+    //     return {
+    //       ...plannedTrip,
+    //       address: addressResponse?.data.features[0].properties.address_line2,
+    //     };
+    //   })
+    // );
+
     dispatch(fetchAllPlannedTrips(plannedTrips));
 
     const usersTripsResponse = await axios.get(
@@ -28,8 +43,24 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+
     const usersPlannedTrips = usersTripsResponse.data;
-    dispatch(fetchPlannedTripsbyUser(usersPlannedTrips));
+
+    const addAddress = await Promise.all(
+      usersPlannedTrips.map(async (userTrip) => {
+        const addressResponse = await axios.get(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${userTrip.latitude}&lon=${userTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+        );
+        return {
+          ...userTrip,
+          address: addressResponse?.data.features[0].properties.address_line2,
+        };
+      })
+    );
+
+    console.log("addAddress", addAddress);
+
+    dispatch(fetchPlannedTripsbyUser(addAddress));
   } catch (error) {
     console.log(error.message);
   }
@@ -193,7 +224,7 @@ export const fetchUsersScheduledTrips =
       );
 
       const scheduledTrips = response.data;
-      console.log("SCHEDULED TRIPS IN ACTIONS", scheduledTrips);
+
       dispatch(fetchScheduledTripsbyUser(scheduledTrips));
     } catch (error) {
       console.log(error.message);

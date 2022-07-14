@@ -26,7 +26,6 @@ export const Navigation = () => {
           <MenuLink href="/login">Login</MenuLink>
         )}
         <MenuLink href="/plannedtrips">Planned Trips</MenuLink>
-        <MenuLink href="/leaftlet">Leaflet</MenuLink>
         <MenuLink href="/">Home</MenuLink>
       </Menu>
     </Nav>
