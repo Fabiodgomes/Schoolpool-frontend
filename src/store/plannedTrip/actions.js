@@ -21,21 +21,19 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
     });
     const plannedTrips = response.data;
 
-    console.log("PLANNED TRIPS", plannedTrips);
+    const decodeAddress = await Promise.all(
+      plannedTrips?.map(async (plannedTrip) => {
+        const addressResponse = await axios.get(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+        );
+        return {
+          ...plannedTrip,
+          address: addressResponse?.data.features[0].properties.address_line2,
+        };
+      })
+    );
 
-    // const decodeAddress = await Promise.all(
-    //   plannedTrips.map(async (plannedTrip) => {
-    //     const addressResponse = await axios.get(
-    //       `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
-    //     );
-    //     return {
-    //       ...plannedTrip,
-    //       address: addressResponse?.data.features[0].properties.address_line2,
-    //     };
-    //   })
-    // );
-
-    dispatch(fetchAllPlannedTrips(plannedTrips));
+    dispatch(fetchAllPlannedTrips(decodeAddress));
 
     const usersTripsResponse = await axios.get(
       `${apiUrl}/plannedtrips/myplannedtrips`,
@@ -57,8 +55,6 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
         };
       })
     );
-
-    console.log("addAddress", addAddress);
 
     dispatch(fetchPlannedTripsbyUser(addAddress));
   } catch (error) {
@@ -104,7 +100,7 @@ export const fetchAllScheduledTrips = (token) => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const scheduledTrips = response.data;
-    console.log("SCHEDULED TRIPS", scheduledTrips);
+
     dispatch(fetchScheduledTrips(scheduledTrips));
   } catch (error) {
     console.log(error.message);
@@ -129,7 +125,7 @@ export const makeInscription =
         showMessageWithTimeout(
           "failure",
           true,
-          `You have to provide a pick point`,
+          `You have to provide a pick up point`,
           3000
         )
       );
@@ -142,7 +138,7 @@ export const makeInscription =
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("getState", getState());
+
       dispatch(inscription(numberOfKids));
       dispatch(
         scheduleATrip({
@@ -167,16 +163,7 @@ export const makeInscription =
   };
 
 export const newPlannedTrip =
-  (
-    token,
-    date,
-    time,
-    capacity,
-    latitude,
-    longitude,
-    schoolId,
-    transportationTypeId
-  ) =>
+  (token, date, time, capacity, latitude, longitude, schoolId) =>
   async (dispatch, getState) => {
     try {
       const response = await axios.post(
@@ -188,13 +175,13 @@ export const newPlannedTrip =
           latitude,
           longitude,
           schoolId,
-          transportationTypeId,
+          transportationTypeId: 1,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("getState", getState());
+      const plannedTrip = response.data;
 
       dispatch(
         planATrip({
@@ -204,7 +191,7 @@ export const newPlannedTrip =
           latitude: latitude,
           longitude: longitude,
           schoolId: schoolId,
-          transportationTypeId: transportationTypeId,
+          transportationTypeId: 1,
           userId: getState().user.user.id,
         })
       );
@@ -216,16 +203,38 @@ export const newPlannedTrip =
 export const fetchUsersScheduledTrips =
   (token) => async (dispatch, getState) => {
     try {
-      const response = await axios.get(
+      const response = await axios.get(`${apiUrl}/plannedtrips`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const plannedTrips = response.data;
+
+      dispatch(fetchAllPlannedTrips(plannedTrips));
+
+      const responseUsersScheduledTrips = await axios.get(
         `${apiUrl}/scheduledtrips/myscheduledtrips`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      const scheduledTrips = response.data;
+      const scheduledTrips = responseUsersScheduledTrips.data;
 
-      dispatch(fetchScheduledTripsbyUser(scheduledTrips));
+      const addAddressScheduled = await Promise.all(
+        scheduledTrips &&
+          scheduledTrips.map(async (scheduledTrip) => {
+            const addressResponse = await axios.get(
+              `https://api.geoapify.com/v1/geocode/reverse?lat=${scheduledTrip.latitude}&lon=${scheduledTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+            );
+
+            return {
+              ...scheduledTrip,
+              address:
+                addressResponse?.data.features[0].properties.address_line2,
+            };
+          })
+      );
+
+      dispatch(fetchScheduledTripsbyUser(addAddressScheduled));
     } catch (error) {
       console.log(error.message);
     }

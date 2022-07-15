@@ -1,3 +1,4 @@
+import "./styles.css";
 import {
   fetchAllSchools,
   newPlannedTrip,
@@ -60,8 +61,8 @@ export default function NewPlannedTrip() {
           capacity,
           latitude,
           longitude,
-          schoolId,
-          transportationTypeId
+          schoolId
+          // transportationTypeId
         )
       );
       setDate("");
@@ -70,7 +71,7 @@ export default function NewPlannedTrip() {
       setLatitude("");
       setLongitude("");
       setSchoolId(1);
-      setTransportationTypeId("");
+      // setTransportationTypeId("");
     }
   }
 
@@ -90,9 +91,10 @@ export default function NewPlannedTrip() {
     <Container>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
         <h3 className="mt-5 mb-5">Plan a Trip</h3>
-        <Form.Group controlId="formBasicName">
+        <Form.Group className="form-group" controlId="formBasicName">
           <Form.Label>Date</Form.Label>
           <Form.Control
+            className="form-control"
             value={date}
             onChange={(event) => {
               setDate(event.target.value);
@@ -101,8 +103,9 @@ export default function NewPlannedTrip() {
             type="date"
             required
           />
-          <Form.Label>time</Form.Label>
+          <Form.Label>Time</Form.Label>
           <Form.Control
+            className="form-control"
             value={time}
             onChange={(event) => {
               setTime(event.target.value);
@@ -111,8 +114,10 @@ export default function NewPlannedTrip() {
             type="time"
             required
           />
+
           <Form.Label>Capacity</Form.Label>
           <Form.Control
+            className="form-control"
             value={parseInt(capacity)}
             onChange={(event) => {
               setCapacity(event.target.value);
@@ -123,6 +128,7 @@ export default function NewPlannedTrip() {
           />
           <Form.Label>Latitude</Form.Label>
           <Form.Control
+            className="form-control"
             value={latitude}
             onChange={(event) => {
               setLatitude(event.target.value);
@@ -133,6 +139,7 @@ export default function NewPlannedTrip() {
           />
           <Form.Label>Longitude</Form.Label>
           <Form.Control
+            className="form-control"
             value={longitude}
             onChange={(event) => {
               setLongitude(event.target.value);
@@ -141,8 +148,9 @@ export default function NewPlannedTrip() {
             type="string"
             required
           />
-          <Form.Label>School Id</Form.Label>
+          <Form.Label>School</Form.Label>
           <Form.Select
+            className="form-control"
             value={schoolId}
             onChange={(event) => {
               setSchoolId(event.target.value);
@@ -167,8 +175,9 @@ export default function NewPlannedTrip() {
               <option value={school.id}>{school.name}</option>
             ))}
           </Form.Select>
-          <Form.Label>Transportation Type Id</Form.Label>
+          {/* <Form.Label>Transportation Type Id</Form.Label>
           <Form.Control
+            className="form-control"
             value={transportationTypeId}
             onChange={(event) => {
               setTransportationTypeId(event.target.value);
@@ -176,7 +185,16 @@ export default function NewPlannedTrip() {
             }}
             type="number"
             required
-          />
+          /> */}
+          <br />
+          <Button
+            className="button"
+            variant="primary"
+            type="submit"
+            onClick={submitForm}
+          >
+            New trip !
+          </Button>
           <MapContainer
             style={{
               border: "2px solid",
@@ -229,11 +247,7 @@ export default function NewPlannedTrip() {
       ))} */}
           </MapContainer>
         </Form.Group>
-        <Form.Group className="mt-5">
-          <Button variant="primary" type="submit" onClick={submitForm}>
-            New trip !
-          </Button>
-        </Form.Group>
+        <Form.Group className="mt-5"></Form.Group>
       </Form>
     </Container>
   );

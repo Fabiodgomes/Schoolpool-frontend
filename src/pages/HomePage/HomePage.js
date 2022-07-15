@@ -18,6 +18,7 @@ import {
   fetchUsersPlannedTrips,
 } from "../../store/plannedTrip/actions";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
+import axios from "axios";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -39,21 +40,36 @@ export const HomePage = () => {
   // console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
   // console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
 
-  const convertDate =
+  const convertDatePlannedTrip =
     plannedTripsByUser &&
     plannedTripsByUser.map((plannedTrip) => {
       return { ...plannedTrip, date: new Date(plannedTrip.date) };
     });
-  console.log("CONVERTED DATE", convertDate);
 
   const sortedPlannedTripsByUser =
     plannedTripsByUser &&
-    convertDate &&
-    [...convertDate].sort((a, b) => {
+    convertDatePlannedTrip &&
+    [...convertDatePlannedTrip].sort((a, b) => {
       return Number(a.date) - Number(b.date);
     });
 
-  console.log("SORTED TRIPS", sortedPlannedTripsByUser);
+  const DateScheduledTrip =
+    scheduledTripsbyUser &&
+    plannedTripsByUser &&
+    scheduledTripsbyUser.map((scheduledTrip) =>
+      plannedTripsByUser.find((plannedTrip) => {
+        return plannedTrip.userId === scheduledTrip.userId;
+      })
+    );
+  console.log("PLANNED TRIP BY SCHEDULED USER ID", DateScheduledTrip);
+
+  const sortedScheduledTripsByUser =
+    plannedTripsByUser &&
+    scheduledTripsbyUser &&
+    DateScheduledTrip &&
+    [...convertDatePlannedTrip].sort((a, b) => {
+      return Number(a.date) - Number(b.date);
+    });
 
   const filteredTripsById = () => {
     if (plannedTripsByUser) {
@@ -61,7 +77,7 @@ export const HomePage = () => {
         return plannedTripsByUser;
       } else {
         return plannedTripsByUser.filter((plannedTrip) =>
-          selectedDate.includes(plannedTripsByUser.id)
+          selectedDate.includes(plannedTrip.id)
         );
       }
     } else {
@@ -69,23 +85,6 @@ export const HomePage = () => {
     }
   };
 
-  // const fetchReverseGeoCode = async (latitude, longitude) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
-  //     );
-  //     console.log(
-  //       "RESPONSE",
-  //       response?.data.features[0].properties.address_line2
-  //     );
-  //     const address = response?.data.features[0].properties.address_line2;
-
-  //     return address;
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-  // console.log("FILTERED TRIPS BY ID", filteredTripsById());
   return (
     <>
       {token ? (
@@ -96,7 +95,7 @@ export const HomePage = () => {
               <th>Number Of Kids</th>
               <th>Date</th>
               <th>Time</th>
-              <th>Adress</th>
+              <th>Pick-up Adress</th>
               <th>School</th>
               <th>Inscription</th>
             </tr>
@@ -133,6 +132,7 @@ export const HomePage = () => {
                           ).schoolId
                       ).name
                     }
+                    address={scheduledTrip.address}
                   />
                 ))}
           </table>

@@ -10,7 +10,7 @@ export default function ScheduledTripBlock(props) {
       <td>{props.numberOfKids}</td>
       <td>{date}</td>
       <td>{props.time}</td>
-      <td>adress To do</td>
+      <td>{props.address}</td>
       <td>{props.school}</td>
       <td>
         {

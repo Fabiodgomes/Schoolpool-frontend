@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -24,7 +23,6 @@ export const PlannedTrips = () => {
     allPlannedTrips.map((plannedTrip) => {
       return { ...plannedTrip, date: new Date(plannedTrip.date) };
     });
-  console.log("CONVERTED DATE", convertDate);
 
   const sortedTrips =
     allPlannedTrips &&
@@ -33,9 +31,6 @@ export const PlannedTrips = () => {
       return Number(a.date) - Number(b.date);
     });
 
-  console.log("SORTED TRIPS", sortedTrips);
-
-  // console.log("allPLannedTrips", allPlannedTrips);
   return (
     <>
       {token ? (
@@ -61,7 +56,7 @@ export const PlannedTrips = () => {
                       id={sortedTrip.id}
                       date={sortedTrip.date}
                       time={sortedTrip.time}
-                      adress={sortedTrip.address}
+                      address={sortedTrip.address}
                       capacity={sortedTrip.capacity}
                       school={
                         schools.find(

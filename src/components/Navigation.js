@@ -47,12 +47,12 @@ const MenuLink = styled.a`
 `;
 
 const Nav = styled.div`
-  padding: 0 2rem;
+  padding: 0 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: #b22727;
+  background: #2233bb;
   /* position: absolute; */
   top: 0;
   left: 0;
