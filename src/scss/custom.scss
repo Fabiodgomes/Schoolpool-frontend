@@ -1,0 +1,6 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+.custom-element {
+  color: gray("100");
+  background-color: theme-color("dark");
+}

@@ -1,4 +1,5 @@
 import "./styles.css";
+// import "../../scss/custom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -18,7 +19,8 @@ import {
   fetchUsersPlannedTrips,
 } from "../../store/plannedTrip/actions";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
-import axios from "axios";
+import { Table } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -53,23 +55,23 @@ export const HomePage = () => {
       return Number(a.date) - Number(b.date);
     });
 
-  const DateScheduledTrip =
-    scheduledTripsbyUser &&
-    plannedTripsByUser &&
-    scheduledTripsbyUser.map((scheduledTrip) =>
-      plannedTripsByUser.find((plannedTrip) => {
-        return plannedTrip.userId === scheduledTrip.userId;
-      })
-    );
-  console.log("PLANNED TRIP BY SCHEDULED USER ID", DateScheduledTrip);
+  // const DateScheduledTrip =
+  //   scheduledTripsbyUser &&
+  //   plannedTripsByUser &&
+  //   scheduledTripsbyUser.map((scheduledTrip) =>
+  //     plannedTripsByUser.find((plannedTrip) => {
+  //       return (plannedTrip.userId === scheduledTrip.userId).date;
+  //     })
+  //   );
+  // console.log("PLANNED TRIP DATE BY SCHEDULED USER ID", DateScheduledTrip);
 
-  const sortedScheduledTripsByUser =
-    plannedTripsByUser &&
-    scheduledTripsbyUser &&
-    DateScheduledTrip &&
-    [...convertDatePlannedTrip].sort((a, b) => {
-      return Number(a.date) - Number(b.date);
-    });
+  // const sortedScheduledTripsByUser =
+  //   plannedTripsByUser &&
+  //   scheduledTripsbyUser &&
+  //   DateScheduledTrip &&
+  //   [...convertDatePlannedTrip].sort((a, b) => {
+  //     return Number(a.date) - Number(b.date);
+  //   });
 
   const filteredTripsById = () => {
     if (plannedTripsByUser) {
@@ -87,94 +89,106 @@ export const HomePage = () => {
 
   return (
     <>
-      {token ? (
-        <div className="tableContainer">
-          <h1>My kids are registered in the following trips</h1>
-          <table className="table">
-            <tr className="table-head-row">
-              <th>Number Of Kids</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Pick-up Adress</th>
-              <th>School</th>
-              <th>Inscription</th>
-            </tr>
-            {!scheduledTripsbyUser ||
-            !plannedTrips ||
-            !schools ||
-            !plannedTripsByUser
-              ? "Loading"
-              : scheduledTripsbyUser.map((scheduledTrip, i) => (
-                  <ScheduledTripBlock
-                    key={i}
-                    id={scheduledTrip.id}
-                    plannedTripId={scheduledTrip.plannedTripId}
-                    numberOfKids={scheduledTrip.numberOfKids}
-                    date={
-                      plannedTrips.find(
-                        (plannedTrip) =>
-                          plannedTrip.id === scheduledTrip.plannedTripId
-                      ).date
-                    }
-                    time={
-                      plannedTrips?.find(
-                        (plannedTrip) =>
-                          plannedTrip.id === scheduledTrip.plannedTripId
-                      ).time
-                    }
-                    school={
-                      schools.find(
-                        (school) =>
-                          school.id ===
+      <div className="homePage">
+        {token ? (
+          <div>
+            <h2>My kid's trips</h2>
+            <Table className="table-hover table-dark table-striped" size="sm">
+              <caption>My kids are registered in the trips above</caption>
+              <thead>
+                <tr>
+                  <th>Number Of Kids</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Pick-up Adress</th>
+                  <th>School</th>
+                  <th>Inscription</th>
+                </tr>
+              </thead>
+              <tbody>
+                {!scheduledTripsbyUser ||
+                !plannedTrips ||
+                !schools ||
+                !plannedTripsByUser
+                  ? "Loading"
+                  : scheduledTripsbyUser.map((scheduledTrip, i) => (
+                      <ScheduledTripBlock
+                        key={i}
+                        id={scheduledTrip.id}
+                        plannedTripId={scheduledTrip.plannedTripId}
+                        numberOfKids={scheduledTrip.numberOfKids}
+                        date={
                           plannedTrips.find(
                             (plannedTrip) =>
                               plannedTrip.id === scheduledTrip.plannedTripId
-                          ).schoolId
-                      ).name
-                    }
-                    address={scheduledTrip.address}
-                  />
-                ))}
-          </table>
-          <h1>I am the accompanying person in the following trips</h1>
-          <table>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Capacity</th>
-              <th>Starting adress</th>
-              <th>School</th>
-              <th>Inscription</th>
-            </tr>
-
-            {!plannedTripsByUser || !plannedTrips || !schools
-              ? "Loading"
-              : sortedPlannedTripsByUser.map((plannedTrip, i) => (
-                  <PlannedTripBlock
-                    key={i}
-                    id={plannedTrip.id}
-                    date={plannedTrip.date}
-                    time={plannedTrip.time}
-                    capacity={plannedTrip.capacity}
-                    address={plannedTrip.address}
-                    school={
-                      schools.find(
-                        (school) =>
-                          school.id ===
-                          plannedTrips.find(
-                            (plannedTrip2) => plannedTrip2.id === plannedTrip.id
-                          ).schoolId
-                      ).name
-                    }
-                  />
-                ))}
-          </table>
-        </div>
-      ) : (
-        <NavLink to="/login">
-          Please login to display your scheduled trips
-        </NavLink>
-      )}{" "}
+                          ).date
+                        }
+                        time={
+                          plannedTrips?.find(
+                            (plannedTrip) =>
+                              plannedTrip.id === scheduledTrip.plannedTripId
+                          ).time
+                        }
+                        school={
+                          schools.find(
+                            (school) =>
+                              school.id ===
+                              plannedTrips.find(
+                                (plannedTrip) =>
+                                  plannedTrip.id === scheduledTrip.plannedTripId
+                              ).schoolId
+                          ).name
+                        }
+                        address={scheduledTrip.address}
+                      />
+                    ))}
+              </tbody>
+            </Table>
+            <h2>My trips</h2>
+            <Table className="table-hover table-dark table-striped" size="sm">
+              <caption>I am the accompanying person on the trips above</caption>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Capacity</th>
+                  <th>Starting adress</th>
+                  <th>School</th>
+                  <th>Inscription</th>
+                </tr>
+              </thead>
+              <tbody>
+                {!plannedTripsByUser || !plannedTrips || !schools
+                  ? "Loading"
+                  : sortedPlannedTripsByUser.map((plannedTrip, i) => (
+                      <PlannedTripBlock
+                        key={i}
+                        id={plannedTrip.id}
+                        date={plannedTrip.date}
+                        time={plannedTrip.time}
+                        capacity={plannedTrip.capacity}
+                        address={plannedTrip.address}
+                        school={
+                          schools.find(
+                            (school) =>
+                              school.id ===
+                              plannedTrips.find(
+                                (plannedTrip2) =>
+                                  plannedTrip2.id === plannedTrip.id
+                              ).schoolId
+                          ).name
+                        }
+                      />
+                    ))}
+              </tbody>
+            </Table>
+          </div>
+        ) : (
+          <NavLink to="/login">
+            Please login to display your scheduled trips
+          </NavLink>
+        )}{" "}
+      </div>
     </>
   );
 };

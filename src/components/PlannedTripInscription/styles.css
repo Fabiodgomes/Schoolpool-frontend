@@ -1,3 +1,10 @@
+.planned-trip-inscription-container {
+  padding-left: 2%;
+  padding-top: 5%;
+  display: flex;
+  flex-direction: row;
+}
+
 a {
   font-style: italic;
   font-size: normal;
@@ -11,17 +18,13 @@ li {
 .planned-trip-inscription {
   display: flex;
   flex-direction: row;
+  margin: 1%;
+}
+.image-container {
+  margin-left: 20%;
+  align-items: flex-end;
 }
 .school-image {
   max-width: 400px;
-}
-
-.image-container {
-  padding-left: 10%;
-  padding-top: 5%;
-}
-
-.planned-trip-inscription-container {
-  padding-left: 2%;
-  padding-top: 5%;
+  padding: 10%;
 }

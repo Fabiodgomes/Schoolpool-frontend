@@ -72,7 +72,10 @@ export const fetchPlannedTripDetail =
       const plannedTripDetails = response.data;
       const schoolId = response.data.schoolId;
 
+      console.log("PLANNED TRIP DETAILS LATITUDE", plannedTripDetails.latitude);
+
       dispatch(fetchOnePlannedTrip(plannedTripDetails));
+
       const schoolResponse = await axios.get(`${apiUrl}/schools/${schoolId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -120,6 +123,16 @@ export const makeInscription =
         )
       );
     }
+    if (!numberOfKids || numberOfKids < 1) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `You are trying to register a trip but you didn't provide the number of kids or it's less than 1`,
+          3000
+        )
+      );
+    }
     if (!latitude || !longitude) {
       dispatch(
         showMessageWithTimeout(
@@ -138,7 +151,14 @@ export const makeInscription =
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          true,
+          `${numberOfKids} kid(s) registered on the trip`,
+          3000
+        )
+      );
       dispatch(inscription(numberOfKids));
       dispatch(
         scheduleATrip({
@@ -149,14 +169,6 @@ export const makeInscription =
           userId: getState().user.user.id,
         })
       );
-      dispatch(
-        showMessageWithTimeout(
-          "success",
-          true,
-          `${numberOfKids} kid(s) registered on the trip`,
-          3000
-        )
-      );
     } catch (error) {
       console.log(error.message);
     }
@@ -165,6 +177,16 @@ export const makeInscription =
 export const newPlannedTrip =
   (token, date, time, capacity, latitude, longitude, schoolId) =>
   async (dispatch, getState) => {
+    if (!date || !time || !capacity || !latitude || !longitude || !schoolId) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `You have to provide all the informations to plan a new trip`,
+          3000
+        )
+      );
+    }
     try {
       const response = await axios.post(
         `${apiUrl}/plannedtrips/newplannedtrip`,
@@ -183,6 +205,23 @@ export const newPlannedTrip =
       );
       const plannedTrip = response.data;
 
+      const responsePlannedTrips = await axios.get(`${apiUrl}/plannedtrips`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const plannedTrips = responsePlannedTrips.data;
+
+      const decodeAddress = await Promise.all(
+        plannedTrips?.map(async (plannedTrip) => {
+          const addressResponse = await axios.get(
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+          );
+          return {
+            ...plannedTrip,
+            address: addressResponse?.data.features[0].properties.address_line2,
+          };
+        })
+      );
+
       dispatch(
         planATrip({
           date: date,
@@ -195,6 +234,15 @@ export const newPlannedTrip =
           userId: getState().user.user.id,
         })
       );
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          true,
+          `New trip on ${date} at ${time} with ${capacity} booked `,
+          3000
+        )
+      );
+      dispatch(fetchAllPlannedTrips(decodeAddress));
     } catch (error) {
       console.log(error.message);
     }

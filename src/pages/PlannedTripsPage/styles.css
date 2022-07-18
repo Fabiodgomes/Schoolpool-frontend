@@ -1,7 +1,4 @@
-.tableContainer {
-  display: flex;
-  flex-direction: column;
+.plannedTripPage {
+  color: white;
+  background-color: black;
 }
-/* tr {
-  border-bottom: 5pt solid black;
-} */

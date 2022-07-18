@@ -23,6 +23,9 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import "./styles.css";
 
 export const InscriptionPage = () => {
   const dispatch = useDispatch();
@@ -66,14 +69,15 @@ export const InscriptionPage = () => {
     setLongitude("");
   };
 
+  console.log();
   return (
     <>
-      <div>
+      <div className="inscription-page">
         {plannedTripDetails && schools && schoolDetails ? (
           <div>
             <div>
               <PlannedTripInscription
-                departure={plannedTripDetails.longitude}
+                departure={plannedTripDetails.address}
                 school={
                   schools.find(
                     (school) => school.id === plannedTripDetails.schoolId
@@ -91,29 +95,18 @@ export const InscriptionPage = () => {
             </div>
             <label>Number of Kids</label>
             <input
+              className="form-control"
+              // style={{ witdh: "20px" }}
               type="number"
               value={parseInt(numberOfKids)}
               onChange={(event) => {
                 setNumberOfKids(event.target.value);
               }}
             />
-            <label>Latitude</label>
-            <input
-              type="number"
-              value={latitude}
-              onChange={(event) => {
-                setLatitude(event.target.value);
-              }}
-            />
-            <label>Longitude</label>
-            <input
-              type="number"
-              value={longitude}
-              onChange={(event) => {
-                setLongitude(event.target.value);
-              }}
-            />
-            <button
+            <h4>Choose the pick-up point in the map</h4>
+            <Button
+              className="button"
+              variant="secondary"
               type="submit"
               onClick={() => {
                 dispatch(
@@ -129,8 +122,8 @@ export const InscriptionPage = () => {
                 resetFields();
               }}
             >
-              Book
-            </button>
+              Book a trip !
+            </Button>
             <MapContainer
               style={{
                 border: "2px solid",

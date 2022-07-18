@@ -4,17 +4,15 @@ export const PlannedTripInscription = (props) => {
   return (
     <>
       <div className="planned-trip-inscription-container">
+        <h2></h2>
         <div className="trip">
           <ul>
             <li>
-              <a>Departure :</a> {props.departure}
-            </li>
-            <li>
-              <a>School : </a>
+              <a> </a>
               {props.school}
             </li>
             <li>
-              <a>Date and Time : </a>
+              <a> </a>
               {props.date} at {props.time}
             </li>
             <li>
