@@ -15,16 +15,18 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="website">
       <Navigation />
       <MessageBox />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/plannedtrips" element={<PlannedTrips />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/inscription/:id" element={<InscriptionPage />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/plannedtrips" element={<PlannedTrips />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/inscription/:id" element={<InscriptionPage />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
     </div>
   );
 }

@@ -60,7 +60,7 @@ export const HomePage = () => {
   //   plannedTripsByUser &&
   //   scheduledTripsbyUser.map((scheduledTrip) =>
   //     plannedTripsByUser.find((plannedTrip) => {
-  //       return (plannedTrip.userId === scheduledTrip.userId).date;
+  //       return (plannedTrip.userId === scheduledTrip.userId);
   //     })
   //   );
   // console.log("PLANNED TRIP DATE BY SCHEDULED USER ID", DateScheduledTrip);
@@ -73,19 +73,19 @@ export const HomePage = () => {
   //     return Number(a.date) - Number(b.date);
   //   });
 
-  const filteredTripsById = () => {
-    if (plannedTripsByUser) {
-      if (selectedDate.length === 0) {
-        return plannedTripsByUser;
-      } else {
-        return plannedTripsByUser.filter((plannedTrip) =>
-          selectedDate.includes(plannedTrip.id)
-        );
-      }
-    } else {
-      return null;
-    }
-  };
+  // const filteredTripsById = () => {
+  //   if (plannedTripsByUser) {
+  //     if (selectedDate.length === 0) {
+  //       return plannedTripsByUser;
+  //     } else {
+  //       return plannedTripsByUser.filter((plannedTrip) =>
+  //         selectedDate.includes(plannedTrip.id)
+  //       );
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+  // };
 
   return (
     <>

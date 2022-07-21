@@ -3,9 +3,7 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-// props = {
-//  points: [[lat, lng], [lat, lng], ...]
-// }
+
 export function ShowRoute(props) {
   const [route, setRoute] = useState();
   const map = useMap();

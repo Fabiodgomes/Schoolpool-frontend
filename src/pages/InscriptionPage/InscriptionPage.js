@@ -26,6 +26,8 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import "./styles.css";
+import axios from "axios";
+import L from "leaflet";
 
 export const InscriptionPage = () => {
   const dispatch = useDispatch();
@@ -69,40 +71,51 @@ export const InscriptionPage = () => {
     setLongitude("");
   };
 
+  const icon = L.icon({
+    iconUrl:
+      "https://amberbrantjes.nl/wp-content/uploads/2015/10/map-marker-icon.png",
+    iconSize: [40, 40],
+  });
+
   console.log();
   return (
     <>
       <div className="inscription-page">
         {plannedTripDetails && schools && schoolDetails ? (
           <div>
-            <div>
-              <PlannedTripInscription
-                departure={plannedTripDetails.address}
-                school={
-                  schools.find(
-                    (school) => school.id === plannedTripDetails.schoolId
-                  ).name
-                }
-                date={plannedTripDetails.date}
-                time={plannedTripDetails.time}
-                capacity={plannedTripDetails.capacity}
-                schoolImage={
-                  schools?.find(
-                    (school) => school.id === plannedTripDetails.schoolId
-                  ).imageUrl
-                }
-              />
+            <div className="inscription">
+              <div>
+                <PlannedTripInscription
+                  departure={plannedTripDetails.address}
+                  school={
+                    schools.find(
+                      (school) => school.id === plannedTripDetails.schoolId
+                    ).name
+                  }
+                  date={plannedTripDetails.date}
+                  time={plannedTripDetails.time}
+                  capacity={plannedTripDetails.capacity}
+                  schoolImage={
+                    schools?.find(
+                      (school) => school.id === plannedTripDetails.schoolId
+                    ).imageUrl
+                  }
+                />
+              </div>
+              <div className="numberOfKids">
+                <label>Number of Kids </label>
+                <input
+                  className="form-control form-control-sm"
+                  // style={{ witdh: "20px" }}
+                  type="number"
+                  value={parseInt(numberOfKids)}
+                  onChange={(event) => {
+                    setNumberOfKids(event.target.value);
+                  }}
+                />
+              </div>
             </div>
-            <label>Number of Kids</label>
-            <input
-              className="form-control"
-              // style={{ witdh: "20px" }}
-              type="number"
-              value={parseInt(numberOfKids)}
-              onChange={(event) => {
-                setNumberOfKids(event.target.value);
-              }}
-            />
+            <br />
             <h4>Choose the pick-up point in the map</h4>
             <Button
               className="button"
@@ -183,6 +196,7 @@ export const InscriptionPage = () => {
               <Marker
                 key={schoolDetails.id}
                 position={[schoolDetails.latitude, schoolDetails.longitude]}
+                icon={icon}
               >
                 {" "}
               </Marker>
