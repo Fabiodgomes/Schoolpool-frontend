@@ -3,6 +3,7 @@
   flex-direction: row; */
   color: white;
   background-color: #292929;
+  align-items: center;
 }
 
 .numberOfKids {
