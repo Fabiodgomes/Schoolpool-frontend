@@ -146,7 +146,7 @@ export const InscriptionPage = () => {
                   width: "60vw",
                   maxWidth: "700px",
                   maxHeight: "400px",
-                  margin: "0px 19.5%",
+                  marginTop: "5%",
                 }}
                 center={[52.36994, 4.906]}
                 zoom={12}
