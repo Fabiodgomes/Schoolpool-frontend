@@ -16,6 +16,14 @@ export function ShowRoute(props) {
       const newRoute = L.Routing.control({
         show: false,
         waypoints: props.points.map((p) => L.latLng(p[0], p[1])),
+        createMarker: (i, wp) =>
+          L.marker(wp.latLng, {
+            icon: L.icon({
+              iconUrl:
+                "https://amberbrantjes.nl/wp-content/uploads/2015/10/map-marker-icon.png",
+              iconSize: [40, 40],
+            }),
+          }),
       });
       newRoute.addTo(map);
       setRoute(newRoute);

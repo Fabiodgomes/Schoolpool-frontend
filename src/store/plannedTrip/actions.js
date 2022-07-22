@@ -203,37 +203,22 @@ export const newPlannedTrip =
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      const plannedTrip = response.data;
+      const plannedTrip = response.data.newPlannedTrip;
 
-      const responsePlannedTrips = await axios.get(`${apiUrl}/plannedtrips`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const plannedTrips = responsePlannedTrips.data;
+      // const responsePlannedTrips = await axios.get(`${apiUrl}/plannedtrips`, {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+      // const plannedTrips = responsePlannedTrips.data;
 
-      const decodeAddress = await Promise.all(
-        plannedTrips?.map(async (plannedTrip) => {
-          const addressResponse = await axios.get(
-            `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
-          );
-          return {
-            ...plannedTrip,
-            address: addressResponse?.data.features[0].properties.address_line2,
-          };
-        })
+      const addressResponse = await axios.get(
+        `https://api.geoapify.com/v1/geocode/reverse?lat=${plannedTrip.latitude}&lon=${plannedTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
       );
+      const tripWithDecodedAddress = {
+        ...plannedTrip,
+        address: addressResponse?.data.features[0].properties.address_line2,
+      };
 
-      dispatch(
-        planATrip({
-          date: date,
-          time: time,
-          capacity: capacity,
-          latitude: latitude,
-          longitude: longitude,
-          schoolId: schoolId,
-          transportationTypeId: 1,
-          userId: getState().user.user.id,
-        })
-      );
+      dispatch(planATrip(tripWithDecodedAddress));
       dispatch(
         showMessageWithTimeout(
           "success",
@@ -242,7 +227,7 @@ export const newPlannedTrip =
           3000
         )
       );
-      dispatch(fetchAllPlannedTrips(decodeAddress));
+      // dispatch(fetchAllPlannedTrips(decodeAddress));
     } catch (error) {
       console.log(error.message);
     }
