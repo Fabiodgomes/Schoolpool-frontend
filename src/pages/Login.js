@@ -28,7 +28,7 @@ export const Login = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", backgroundColor: "black" }}>
       <Container>
         <Title>Login</Title>
         <form onSubmit={submitForm}>
