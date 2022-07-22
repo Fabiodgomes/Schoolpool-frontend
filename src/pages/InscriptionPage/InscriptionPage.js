@@ -137,70 +137,72 @@ export const InscriptionPage = () => {
             >
               Book a trip !
             </Button>
-            <MapContainer
-              style={{
-                border: "2px solid",
-                borderRadius: "10px",
-                height: "50vw",
-                width: "60vw",
-                maxWidth: "700px",
-                maxHeight: "400px",
-                margin: "0px 19.5%",
-              }}
-              center={[52.36994, 4.906]}
-              zoom={12}
-              scrollWheelZoom={true}
-            >
-              <link
-                rel="stylesheet"
-                href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-                integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-                crossorigin=""
-              />
-              <link
-                rel="stylesheet"
-                href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
-              />
-              <script
-                src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-                integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-                crossorigin=""
-              ></script>
-              <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-              <ShowRoute
-                points={
-                  latitude && longitude
-                    ? [
-                        [
-                          plannedTripDetails.latitude,
-                          plannedTripDetails.longitude,
-                        ],
-                        [latitude, longitude],
-                        [schoolDetails.latitude, schoolDetails.longitude],
-                      ]
-                    : [
-                        [
-                          plannedTripDetails.latitude,
-                          plannedTripDetails.longitude,
-                        ],
-                        [schoolDetails.latitude, schoolDetails.longitude],
-                      ]
-                }
-              />
-              <LocationOnClick />
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-
-              <Marker
-                key={schoolDetails.id}
-                position={[schoolDetails.latitude, schoolDetails.longitude]}
-                icon={icon}
+            <div className="map">
+              <MapContainer
+                style={{
+                  border: "2px solid",
+                  borderRadius: "10px",
+                  height: "50vw",
+                  width: "60vw",
+                  maxWidth: "700px",
+                  maxHeight: "400px",
+                  margin: "0px 19.5%",
+                }}
+                center={[52.36994, 4.906]}
+                zoom={12}
+                scrollWheelZoom={true}
               >
-                {" "}
-              </Marker>
-            </MapContainer>
+                <link
+                  rel="stylesheet"
+                  href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+                  integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+                  crossorigin=""
+                />
+                <link
+                  rel="stylesheet"
+                  href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
+                />
+                <script
+                  src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+                  integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+                  crossorigin=""
+                ></script>
+                <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+                <ShowRoute
+                  points={
+                    latitude && longitude
+                      ? [
+                          [
+                            plannedTripDetails.latitude,
+                            plannedTripDetails.longitude,
+                          ],
+                          [latitude, longitude],
+                          [schoolDetails.latitude, schoolDetails.longitude],
+                        ]
+                      : [
+                          [
+                            plannedTripDetails.latitude,
+                            plannedTripDetails.longitude,
+                          ],
+                          [schoolDetails.latitude, schoolDetails.longitude],
+                        ]
+                  }
+                />
+                <LocationOnClick />
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+
+                <Marker
+                  key={schoolDetails.id}
+                  position={[schoolDetails.latitude, schoolDetails.longitude]}
+                  icon={icon}
+                >
+                  {" "}
+                </Marker>
+              </MapContainer>
+            </div>
           </div>
         ) : (
           "Loading"

@@ -3,7 +3,6 @@
   flex-direction: row; */
   color: white;
   background-color: #292929;
-  align-items: center;
 }
 
 .numberOfKids {
@@ -11,4 +10,8 @@
   max-height: 10px;
   margin-left: 10px;
   margin-bottom: 5%;
+}
+.map {
+  justify-content: center;
+  align-items: center;
 }
