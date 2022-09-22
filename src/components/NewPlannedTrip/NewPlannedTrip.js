@@ -52,6 +52,16 @@ export default function NewPlannedTrip() {
           3000
         )
       );
+    }
+    if (capacity < 1) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `Capacity has to be at least 1`,
+          3000
+        )
+      );
     } else {
       dispatch(
         newPlannedTrip(
