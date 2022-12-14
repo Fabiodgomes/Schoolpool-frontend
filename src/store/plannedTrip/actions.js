@@ -187,6 +187,16 @@ export const newPlannedTrip =
         )
       );
     }
+    if (capacity < 1) {
+      dispatch(
+        showMessageWithTimeout(
+          "failure",
+          true,
+          `The capacity of a new trip has to be 1 at least`,
+          3000
+        )
+      );
+    }
     try {
       const response = await axios.post(
         `${apiUrl}/plannedtrips/newplannedtrip`,
