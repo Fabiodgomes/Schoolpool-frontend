@@ -11,6 +11,7 @@ import {
   selectSchoolDetails,
   selectSchools,
 } from "../../store/plannedTrip/selectors";
+import { selectUser } from "../../store/user/selectors";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
@@ -32,6 +33,7 @@ import L from "leaflet";
 export const InscriptionPage = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
   const schools = useSelector(selectSchools);
   const plannedTripDetails = useSelector(selectPlannedTripDetails);
   const schoolDetails = useSelector(selectSchoolDetails);
@@ -100,6 +102,7 @@ export const InscriptionPage = () => {
                       (school) => school.id === plannedTripDetails.schoolId
                     ).imageUrl
                   }
+                  driverName={""}
                 />
               </div>
               <div className="numberOfKids">

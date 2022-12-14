@@ -57,7 +57,7 @@ export const PlannedTrips = () => {
                   : sortedTrips
                       .filter(
                         (plannedTripCapacity) =>
-                          plannedTripCapacity.capacity !== 0
+                          plannedTripCapacity.capacity > 0
                       )
                       .map((sortedTrip, i) => (
                         <PlannedTripBlock
