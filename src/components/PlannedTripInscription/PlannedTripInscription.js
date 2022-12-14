@@ -18,6 +18,9 @@ export const PlannedTripInscription = (props) => {
             <li>
               {props.capacity} <a>spots left</a>
             </li>
+            <li>
+              driver : <a>{props.driverName}</a>
+            </li>
           </ul>
         </div>
         <div className="image-container">
