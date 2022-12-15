@@ -5,9 +5,9 @@ import { useState } from "react";
 import {
   selectScheduledTripsByUser,
   selectAllPlannedTrips,
-  selectSchools,
   selectPlannedTripsByUser,
 } from "../../store/plannedTrip/selectors";
+import { selectSchools } from "../../store/school/selectors";
 import { useEffect } from "react";
 import { fetchUsersScheduledTrips } from "../../store/plannedTrip/actions";
 import { selectToken } from "../../store/user/selectors";
@@ -15,9 +15,9 @@ import { NavLink } from "react-router-dom";
 import ScheduledTripBlock from "../../components/ScheduledTripBlock/ScheduledTripBlock";
 import {
   fetchPlannedTrips,
-  fetchAllSchools,
   fetchUsersPlannedTrips,
 } from "../../store/plannedTrip/actions";
+import { fetchAllSchools } from "../../store/school/thunks";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -54,38 +54,6 @@ export const HomePage = () => {
     [...convertDatePlannedTrip].sort((a, b) => {
       return Number(a.date) - Number(b.date);
     });
-
-  // const DateScheduledTrip =
-  //   scheduledTripsbyUser &&
-  //   plannedTripsByUser &&
-  //   scheduledTripsbyUser.map((scheduledTrip) =>
-  //     plannedTripsByUser.find((plannedTrip) => {
-  //       return (plannedTrip.userId === scheduledTrip.userId);
-  //     })
-  //   );
-  // console.log("PLANNED TRIP DATE BY SCHEDULED USER ID", DateScheduledTrip);
-
-  // const sortedScheduledTripsByUser =
-  //   plannedTripsByUser &&
-  //   scheduledTripsbyUser &&
-  //   DateScheduledTrip &&
-  //   [...convertDatePlannedTrip].sort((a, b) => {
-  //     return Number(a.date) - Number(b.date);
-  //   });
-
-  // const filteredTripsById = () => {
-  //   if (plannedTripsByUser) {
-  //     if (selectedDate.length === 0) {
-  //       return plannedTripsByUser;
-  //     } else {
-  //       return plannedTripsByUser.filter((plannedTrip) =>
-  //         selectedDate.includes(plannedTrip.id)
-  //       );
-  //     }
-  //   } else {
-  //     return null;
-  //   }
-  // };
 
   return (
     <>

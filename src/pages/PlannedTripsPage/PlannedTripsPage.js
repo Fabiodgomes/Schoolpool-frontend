@@ -6,7 +6,7 @@ import { selectAllPlannedTrips } from "../../store/plannedTrip/selectors";
 import { fetchPlannedTrips } from "../../store/plannedTrip/actions";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { selectToken } from "../../store/user/selectors";
-import { selectSchools } from "../../store/plannedTrip/selectors";
+import { selectSchools } from "../../store/school/selectors";
 import NewPlannedTrip from "../../components/NewPlannedTrip/NewPlannedTrip";
 import { Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

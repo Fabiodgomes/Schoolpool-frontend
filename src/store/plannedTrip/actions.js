@@ -8,10 +8,9 @@ import {
   scheduleATrip,
   planATrip,
   fetchScheduledTripsbyUser,
-  fetchSchools,
   fetchPlannedTripsbyUser,
-  fetchOneSchool,
 } from "./slice";
+import { fetchSchools, fetchOneSchool } from "../school/slice";
 import { showMessageWithTimeout } from "../appState/thunks";
 
 export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
@@ -72,7 +71,7 @@ export const fetchPlannedTripDetail =
       const plannedTripDetails = response.data;
       const schoolId = response.data.schoolId;
 
-      console.log("PLANNED TRIP DETAILS LATITUDE", plannedTripDetails.latitude);
+      // console.log("PLANNED TRIP DETAILS LATITUDE", plannedTripDetails.latitude);
 
       dispatch(fetchOnePlannedTrip(plannedTripDetails));
 
@@ -91,7 +90,7 @@ export const fetchPlannedTripDetail =
       const usersPlannedTrips = usersTripsResponse.data;
       dispatch(fetchPlannedTripsbyUser(usersPlannedTrips));
 
-      console.log("SCHOOL DETAILS", schoolDetails);
+      // console.log("SCHOOL DETAILS", schoolDetails);
     } catch (error) {
       console.log(error.message);
     }
@@ -233,7 +232,9 @@ export const newPlannedTrip =
         showMessageWithTimeout(
           "success",
           true,
-          `New trip on ${date} at ${time} with ${capacity} booked `,
+          `New trip on ${date} at ${time} with ${capacity} free ${
+            capacity > 1 ? "places" : "place"
+          } booked `,
           3000
         )
       );
@@ -303,7 +304,7 @@ export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
     });
 
     const plannedTrips = response.data;
-    console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
+    // console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
     dispatch(fetchPlannedTripsbyUser(plannedTrips));
   } catch (error) {
     console.log(error.message);
@@ -315,10 +316,10 @@ export const fetchSchoolDetails = (token) => async (dispatch, getState) => {
     const id = getState().plannedTrip.plannedTripDetails.schoolId;
     // console.log("GET STATE", id);
 
-    const response = await axios.get(`${apiUrl}/schools/${1}`, {
+    const response = await axios.get(`${apiUrl}/schools/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("GET STATE", getState());
+    // console.log("GET STATE", getState());
 
     const schoolDetails = response.data;
     dispatch(fetchOneSchool(schoolDetails));

@@ -4,26 +4,20 @@ import {
   fetchPlannedTripDetail,
   fetchAllScheduledTrips,
   makeInscription,
-  fetchAllSchools,
 } from "../../store/plannedTrip/actions";
+import { fetchAllSchools, fetchSchoolDetails } from "../../store/school/thunks";
+import { selectPlannedTripDetails } from "../../store/plannedTrip/selectors";
 import {
-  selectPlannedTripDetails,
   selectSchoolDetails,
   selectSchools,
-} from "../../store/plannedTrip/selectors";
+} from "../../store/school/selectors";
 import { selectUser } from "../../store/user/selectors";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import { showMessageWithTimeout } from "../../store/appState/thunks";
 import { ShowRoute } from "../../components/ShowRoute/ShowRoute";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import "./styles.css";
@@ -43,25 +37,23 @@ export const InscriptionPage = () => {
   const [longitude, setLongitude] = useState("");
   const [newLocation, SetNewLocation] = useState();
 
-  console.log("ID", id);
+  // console.log("ID", id);
   useEffect(() => {
     dispatch(fetchPlannedTripDetail(id, token));
     dispatch(fetchAllScheduledTrips(token));
     dispatch(fetchAllSchools(token));
+    // dispatch(fetchSchoolDetails(token));
   }, [dispatch]);
-  // console.log("SCHOOOOLS", schools);
-  console.log("PLANNED TRIPS", plannedTripDetails);
-  // console.log("SCHOOL DETAILS", schoolDetails);
 
   const capacity = plannedTripDetails?.capacity;
 
   function LocationOnClick() {
     const map = useMapEvents({
       click: (event) => {
-        console.log(event.latlng);
+        // console.log(event.latlng);
         setLatitude(event.latlng.lat);
         setLongitude(event.latlng.lng);
-        console.log("latitude & longitude", latitude, "&", longitude);
+        // console.log("latitude & longitude", latitude, "&", longitude);
       },
     });
     return null;
@@ -78,8 +70,9 @@ export const InscriptionPage = () => {
       "https://amberbrantjes.nl/wp-content/uploads/2015/10/map-marker-icon.png",
     iconSize: [40, 40],
   });
-
-  console.log();
+  console.log("SCHOOLS", schools);
+  console.log("SCHOOL DETAILS", schoolDetails);
+  console.log("PLANNED TRIP DETAILS", plannedTripDetails);
   return (
     <>
       <div className="inscription-page">

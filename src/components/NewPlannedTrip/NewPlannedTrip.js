@@ -1,11 +1,9 @@
 import "./styles.css";
-import {
-  fetchAllSchools,
-  newPlannedTrip,
-} from "../../store/plannedTrip/actions";
+import { newPlannedTrip } from "../../store/plannedTrip/actions";
+import { fetchAllSchools } from "../../store/school/thunks";
 import { useEffect } from "react";
 import { selectToken } from "../../store/user/selectors";
-import { selectSchools } from "../../store/plannedTrip/selectors";
+import { selectSchools } from "../../store/school/selectors";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
@@ -27,7 +25,7 @@ export default function NewPlannedTrip() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [schoolId, setSchoolId] = useState(1);
-  const [transportationTypeId, setTransportationTypeId] = useState("");
+  // const [transportationTypeId, setTransportationTypeId] = useState("");
   const [schoolLatitude, setSchoolLatitude] = useState("");
   const [schoolLongitude, setSchoolLongitude] = useState("");
   const token = useSelector(selectToken);
@@ -91,7 +89,6 @@ export default function NewPlannedTrip() {
         console.log(event.latlng);
         setLatitude(event.latlng.lat);
         setLongitude(event.latlng.lng);
-        console.log("latitude & longitude", latitude, "&", longitude);
       },
     });
     return null;
@@ -150,13 +147,6 @@ export default function NewPlannedTrip() {
                 setSchoolLongitude(
                   schools.find((school) => school.id == schoolId).longitude
                 );
-                console.log(
-                  "SCHOOL LAT AND LONG",
-                  schoolLatitude,
-                  schoolLongitude
-                );
-
-                // console.log("SET school Id", event.target.value);
               }}
               type="number"
               required
