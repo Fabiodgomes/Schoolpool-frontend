@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   scheduledTrips: null,
-  scheduledTripsbyUser: null,
+  scheduledTripsByUser: null,
 };
 export const scheduledTripSlice = createSlice({
   name: "scheduledTrip",
@@ -14,12 +14,12 @@ export const scheduledTripSlice = createSlice({
     scheduleATrip: (state, action) => {
       state.scheduledTrips = [...state.scheduledTrips, action.payload];
     },
-    fetchScheduledTripsbyUser: (state, action) => {
-      state.scheduledTripsbyUser = action.payload;
+    fetchScheduledTripsByUser: (state, action) => {
+      state.scheduledTripsByUser = action.payload;
     },
   },
 });
-export const { fetchScheduledTrips, scheduleATrip, fetchScheduledTripsbyUser } =
+export const { fetchScheduledTrips, scheduleATrip, fetchScheduledTripsByUser } =
   scheduledTripSlice.actions;
 
 export default scheduledTripSlice.reducer;

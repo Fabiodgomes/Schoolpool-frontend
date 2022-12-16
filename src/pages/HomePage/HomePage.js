@@ -1,15 +1,14 @@
 import "./styles.css";
-// import "../../scss/custom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
-  selectScheduledTripsByUser,
   selectAllPlannedTrips,
   selectPlannedTripsByUser,
 } from "../../store/plannedTrip/selectors";
 import { selectSchools } from "../../store/school/selectors";
+import { selectScheduledTripsByUser } from "../../store/scheduledTrip/selectors";
 import { useEffect } from "react";
-import { fetchUsersScheduledTrips } from "../../store/plannedTrip/actions";
+
 import { selectToken } from "../../store/user/selectors";
 import { NavLink } from "react-router-dom";
 import ScheduledTripBlock from "../../components/ScheduledTripBlock/ScheduledTripBlock";
@@ -18,13 +17,14 @@ import {
   fetchUsersPlannedTrips,
 } from "../../store/plannedTrip/actions";
 import { fetchAllSchools } from "../../store/school/thunks";
+import { fetchUsersScheduledTrips } from "../../store/scheduledTrip/thunks";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
-  const scheduledTripsbyUser = useSelector(selectScheduledTripsByUser);
+  const scheduledTripsByUser = useSelector(selectScheduledTripsByUser);
   const plannedTripsByUser = useSelector(selectPlannedTripsByUser);
   const plannedTrips = useSelector(selectAllPlannedTrips);
   const schools = useSelector(selectSchools);
@@ -35,12 +35,13 @@ export const HomePage = () => {
     dispatch(fetchUsersScheduledTrips(token));
     dispatch(fetchPlannedTrips(token));
     dispatch(fetchAllSchools(token));
+    // dispatch(fetchPlannedTripsByUser);
   }, [dispatch]);
 
-  // console.log("PLANNED TRIPS", plannedTrips);
-  // console.log("SCHOOLS", schools);
-  // console.log("SCHEDULED TRIPS BY USER", scheduledTripsbyUser);
-  // console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
+  console.log("PLANNED TRIPS", plannedTrips);
+  console.log("SCHOOLS", schools);
+  console.log("SCHEDULED TRIPS BY USER", scheduledTripsByUser);
+  console.log("PLANNED TRIPS BY USER", plannedTripsByUser);
 
   const convertDatePlannedTrip =
     plannedTripsByUser &&
@@ -74,12 +75,12 @@ export const HomePage = () => {
                 </tr>
               </thead>
               <tbody>
-                {!scheduledTripsbyUser ||
+                {!scheduledTripsByUser ||
                 !plannedTrips ||
                 !schools ||
                 !plannedTripsByUser
                   ? "Loading"
-                  : scheduledTripsbyUser.map((scheduledTrip, i) => (
+                  : scheduledTripsByUser.map((scheduledTrip, i) => (
                       <ScheduledTripBlock
                         key={i}
                         id={scheduledTrip.id}

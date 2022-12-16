@@ -3,15 +3,16 @@ import axios from "axios";
 import {
   fetchAllPlannedTrips,
   fetchOnePlannedTrip,
-  fetchScheduledTrips,
   inscription,
-  scheduleATrip,
   planATrip,
-  fetchScheduledTripsbyUser,
-  fetchPlannedTripsbyUser,
+  fetchPlannedTripsByUser,
 } from "./slice";
 import { fetchSchools, fetchOneSchool } from "../school/slice";
 import { showMessageWithTimeout } from "../appState/thunks";
+import {
+  scheduleATrip,
+  fetchScheduledTripsByUser,
+} from "../scheduledTrip/slice";
 
 export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
   try {
@@ -55,7 +56,7 @@ export const fetchPlannedTrips = (token) => async (dispatch, getState) => {
       })
     );
 
-    dispatch(fetchPlannedTripsbyUser(addAddress));
+    dispatch(fetchPlannedTripsByUser(addAddress));
   } catch (error) {
     console.log(error.message);
   }
@@ -88,26 +89,13 @@ export const fetchPlannedTripDetail =
         }
       );
       const usersPlannedTrips = usersTripsResponse.data;
-      dispatch(fetchPlannedTripsbyUser(usersPlannedTrips));
+      dispatch(fetchPlannedTripsByUser(usersPlannedTrips));
 
       // console.log("SCHOOL DETAILS", schoolDetails);
     } catch (error) {
       console.log(error.message);
     }
   };
-
-export const fetchAllScheduledTrips = (token) => async (dispatch, getState) => {
-  try {
-    const response = await axios.get(`${apiUrl}/scheduledtrips`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const scheduledTrips = response.data;
-
-    dispatch(fetchScheduledTrips(scheduledTrips));
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 export const makeInscription =
   (id, token, numberOfKids, latitude, longitude, capacity) =>
@@ -244,86 +232,86 @@ export const newPlannedTrip =
     }
   };
 
-export const fetchUsersScheduledTrips =
-  (token) => async (dispatch, getState) => {
-    try {
-      const response = await axios.get(`${apiUrl}/plannedtrips`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const plannedTrips = response.data;
+// export const fetchUsersScheduledTrips =
+//   (token) => async (dispatch, getState) => {
+//     try {
+//       const response = await axios.get(`${apiUrl}/plannedtrips`, {
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       const plannedTrips = response.data;
 
-      dispatch(fetchAllPlannedTrips(plannedTrips));
+//       dispatch(fetchAllPlannedTrips(plannedTrips));
 
-      const responseUsersScheduledTrips = await axios.get(
-        `${apiUrl}/scheduledtrips/myscheduledtrips`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+//       const responseUsersScheduledTrips = await axios.get(
+//         `${apiUrl}/scheduledtrips/myscheduledtrips`,
+//         {
+//           headers: { Authorization: `Bearer ${token}` },
+//         }
+//       );
 
-      const scheduledTrips = responseUsersScheduledTrips.data;
+//       const scheduledTrips = responseUsersScheduledTrips.data;
 
-      const addAddressScheduled = await Promise.all(
-        scheduledTrips &&
-          scheduledTrips.map(async (scheduledTrip) => {
-            const addressResponse = await axios.get(
-              `https://api.geoapify.com/v1/geocode/reverse?lat=${scheduledTrip.latitude}&lon=${scheduledTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
-            );
+//       const addAddressScheduled = await Promise.all(
+//         scheduledTrips &&
+//           scheduledTrips.map(async (scheduledTrip) => {
+//             const addressResponse = await axios.get(
+//               `https://api.geoapify.com/v1/geocode/reverse?lat=${scheduledTrip.latitude}&lon=${scheduledTrip.longitude}&apiKey=e6ff33bae51a4163acddd7ac1183398f`
+//             );
 
-            return {
-              ...scheduledTrip,
-              address:
-                addressResponse?.data.features[0].properties.address_line2,
-            };
-          })
-      );
+//             return {
+//               ...scheduledTrip,
+//               address:
+//                 addressResponse?.data.features[0].properties.address_line2,
+//             };
+//           })
+//       );
 
-      dispatch(fetchScheduledTripsbyUser(addAddressScheduled));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+//       dispatch(fetchScheduledTripsByUser(addAddressScheduled));
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   };
 
-export const fetchAllSchools = (token) => async (dispatch, getState) => {
-  try {
-    const response = await axios.get(`${apiUrl}/schools`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+// export const fetchAllSchools = (token) => async (dispatch, getState) => {
+//   try {
+//     const response = await axios.get(`${apiUrl}/schools`, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
 
-    const schools = response.data;
-    dispatch(fetchSchools(schools));
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+//     const schools = response.data;
+//     dispatch(fetchSchools(schools));
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
-export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
-  try {
-    const response = await axios.get(`${apiUrl}/plannedtrips/myplannedtrips`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+// export const fetchUsersPlannedTrips = (token) => async (dispatch, getState) => {
+//   try {
+//     const response = await axios.get(`${apiUrl}/plannedtrips/myplannedtrips`, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
 
-    const plannedTrips = response.data;
-    // console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
-    dispatch(fetchPlannedTripsbyUser(plannedTrips));
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+//     const plannedTrips = response.data;
+//     // console.log("PLANNED TRIPS IN ACTIONS", plannedTrips);
+//     dispatch(fetchPlannedTripsByUser(plannedTrips));
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
-export const fetchSchoolDetails = (token) => async (dispatch, getState) => {
-  try {
-    const id = getState().plannedTrip.plannedTripDetails.schoolId;
-    // console.log("GET STATE", id);
+// export const fetchSchoolDetails = (token) => async (dispatch, getState) => {
+//   try {
+//     const id = getState().plannedTrip.plannedTripDetails.schoolId;
+//     // console.log("GET STATE", id);
 
-    const response = await axios.get(`${apiUrl}/schools/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    // console.log("GET STATE", getState());
+//     const response = await axios.get(`${apiUrl}/schools/${id}`, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
+//     // console.log("GET STATE", getState());
 
-    const schoolDetails = response.data;
-    dispatch(fetchOneSchool(schoolDetails));
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+//     const schoolDetails = response.data;
+//     dispatch(fetchOneSchool(schoolDetails));
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };

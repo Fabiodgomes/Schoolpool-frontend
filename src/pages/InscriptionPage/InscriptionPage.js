@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { PlannedTripInscription } from "../../components/PlannedTripInscription/PlannedTripInscription";
 import {
   fetchPlannedTripDetail,
-  fetchAllScheduledTrips,
   makeInscription,
 } from "../../store/plannedTrip/actions";
 import { fetchAllSchools, fetchSchoolDetails } from "../../store/school/thunks";
+import { fetchAllScheduledTrips } from "../../store/scheduledTrip/thunks";
 import { selectPlannedTripDetails } from "../../store/plannedTrip/selectors";
 import {
   selectSchoolDetails,

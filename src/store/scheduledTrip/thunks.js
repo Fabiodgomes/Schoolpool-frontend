@@ -3,9 +3,10 @@ import axios from "axios";
 import {
   fetchScheduledTrips,
   scheduleATrip,
-  fetchScheduledTripsbyUser,
+  fetchScheduledTripsByUser,
 } from "./slice";
 import { showMessageWithTimeout } from "../appState/thunks";
+import { fetchAllPlannedTrips, inscription } from "../plannedTrip/slice";
 
 export const fetchAllScheduledTrips = (token) => async (dispatch, getState) => {
   try {
@@ -53,8 +54,9 @@ export const fetchUsersScheduledTrips =
             };
           })
       );
-
-      dispatch(fetchScheduledTripsbyUser(addAddressScheduled));
+      // console.log("ADDRESS SCHEDULED", addAddressScheduled);
+      dispatch(fetchScheduledTripsByUser(addAddressScheduled));
+      console.log("addAddressScheduled", addAddressScheduled);
     } catch (error) {
       console.log(error.message);
     }
