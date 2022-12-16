@@ -10,6 +10,7 @@ import { selectSchools } from "../../store/school/selectors";
 import NewPlannedTrip from "../../components/NewPlannedTrip/NewPlannedTrip";
 import { Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { tablesStyle } from "../../config/constants";
 
 export const PlannedTrips = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export const PlannedTrips = () => {
       <div className="plannedTripPage">
         {token ? (
           <div>
-            <Table className="table-hover table-dark table-striped" size="sm">
+            <Table className={tablesStyle} size="sm">
               <caption>All planned trips with avaibility</caption>
               <thead>
                 <tr>

@@ -21,6 +21,7 @@ import { fetchUsersScheduledTrips } from "../../store/scheduledTrip/thunks";
 import PlannedTripBlock from "../../components/PlannedTripBlock/PlannedTripBlock";
 import { Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { tablesStyle } from "../../config/constants";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -55,9 +56,6 @@ export const HomePage = () => {
     [...convertDatePlannedTrip].sort((a, b) => {
       return Number(a.date) - Number(b.date);
     });
-
-  const tablesStyle =
-    "tables mx-auto table-hover table-dark table-striped border border-white";
 
   return (
     <>
