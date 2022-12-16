@@ -56,13 +56,16 @@ export const HomePage = () => {
       return Number(a.date) - Number(b.date);
     });
 
+  const tablesStyle =
+    "tables mx-auto table-hover table-dark table-striped border border-white";
+
   return (
     <>
       <div className="homePage">
         {token ? (
           <div>
-            <h2>My kid's trips</h2>
-            <Table className="table-hover table-dark table-striped" size="sm">
+            <h2 className="mx-3">My kid's trips</h2>
+            <Table className={tablesStyle} size="sm">
               <caption>My kids are registered in the trips above</caption>
               <thead>
                 <tr>
@@ -113,8 +116,8 @@ export const HomePage = () => {
                     ))}
               </tbody>
             </Table>
-            <h2>My trips</h2>
-            <Table className="table-hover table-dark table-striped" size="sm">
+            <h2 className="mx-3">My trips</h2>
+            <Table className={tablesStyle} size="sm">
               <caption>I am the accompanying person on the trips above</caption>
               <thead>
                 <tr>
