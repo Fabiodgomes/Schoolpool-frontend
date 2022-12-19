@@ -1,9 +1,9 @@
-.planned-trip-inscription-container {
+/* .planned-trip-inscription-container {
   padding-left: 2%;
   padding-top: 5%;
   display: flex;
   flex-direction: row;
-}
+} */
 
 a {
   font-style: italic;
@@ -26,5 +26,4 @@ li {
 }
 .school-image {
   max-width: 400px;
-  padding: 10%;
 }

@@ -39,6 +39,16 @@ export default function NewPlannedTrip() {
   function submitForm(event) {
     event.preventDefault();
 
+    const resetFields = () => {
+      setDate("");
+      setTime("");
+      setCapacity("");
+      setLatitude("");
+      setLongitude("");
+      setSchoolId(1);
+      // setTransportationTypeId("");
+    };
+
     if (!date || !time || !capacity || !latitude || !longitude || !schoolId) {
       // const message = "Please provide all the required information";
       // alert(message);
@@ -73,13 +83,8 @@ export default function NewPlannedTrip() {
           // transportationTypeId
         )
       );
-      setDate("");
-      setTime("");
-      setCapacity("");
-      setLatitude("");
-      setLongitude("");
-      setSchoolId(1);
-      // setTransportationTypeId("");
+
+      resetFields();
     }
   }
 
@@ -220,7 +225,7 @@ export default function NewPlannedTrip() {
         </Col>
       </Row>
       <Button
-        className="mb-4 mt-1"
+        className="mb-4 mt-0"
         variant="secondary"
         type="submit"
         onClick={submitForm}
