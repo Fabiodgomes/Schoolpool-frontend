@@ -37,7 +37,6 @@ export const InscriptionPage = () => {
   const [longitude, setLongitude] = useState("");
   const [newLocation, SetNewLocation] = useState();
 
-  // console.log("ID", id);
   useEffect(() => {
     dispatch(fetchPlannedTripDetail(id, token));
     dispatch(fetchAllScheduledTrips(token));
@@ -50,10 +49,8 @@ export const InscriptionPage = () => {
   function LocationOnClick() {
     const map = useMapEvents({
       click: (event) => {
-        // console.log(event.latlng);
         setLatitude(event.latlng.lat);
         setLongitude(event.latlng.lng);
-        // console.log("latitude & longitude", latitude, "&", longitude);
       },
     });
     return null;
@@ -77,9 +74,15 @@ export const InscriptionPage = () => {
       "https://amberbrantjes.nl/wp-content/uploads/2015/10/map-marker-icon.png",
     iconSize: [40, 40],
   });
-  console.log("SCHOOLS", schools);
-  console.log("SCHOOL DETAILS", schoolDetails);
-  console.log("PLANNED TRIP DETAILS", plannedTripDetails);
+
+  const schoolName = schools?.find(
+    (school) => school.id === plannedTripDetails.schoolId
+  ).name;
+  const schoolImage = schools?.find(
+    (school) => school.id === plannedTripDetails.schoolId
+  ).imageUrl;
+
+  console.log("SCHOOL IMAGE", schoolImage);
   return (
     <>
       <div className="inscription-page">
@@ -90,19 +93,11 @@ export const InscriptionPage = () => {
               <Col as={Col} md={{ span: 4 }} className="mt-5">
                 <PlannedTripInscription
                   departure={plannedTripDetails.address}
-                  school={
-                    schools.find(
-                      (school) => school.id === plannedTripDetails.schoolId
-                    ).name
-                  }
+                  school={schoolName}
                   date={plannedTripDetails.date}
                   time={plannedTripDetails.time}
                   capacity={plannedTripDetails.capacity}
-                  schoolImage={
-                    schools?.find(
-                      (school) => school.id === plannedTripDetails.schoolId
-                    ).imageUrl
-                  }
+                  schoolImage={schoolImage}
                   driverName={""}
                 />
                 <div className="col-sm-1 mb-3">

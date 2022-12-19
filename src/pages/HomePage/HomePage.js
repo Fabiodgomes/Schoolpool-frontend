@@ -56,6 +56,27 @@ export const HomePage = () => {
     [...convertDatePlannedTrip].sort((a, b) => {
       return Number(a.date) - Number(b.date);
     });
+  const date = (scheduledTrip) => {
+    return plannedTrips?.find(
+      (plannedTrip) => plannedTrip.id === scheduledTrip.plannedTripId
+    ).date;
+  };
+
+  const time = (scheduledTrip) => {
+    return plannedTrips?.find(
+      (plannedTrip) => plannedTrip.id === scheduledTrip.plannedTripId
+    ).time;
+  };
+
+  const schoolName = (scheduledTrip) => {
+    return schools?.find(
+      (school) =>
+        school.id ===
+        plannedTrips.find(
+          (plannedTrip) => plannedTrip.id === scheduledTrip.plannedTripId
+        ).schoolId
+    ).name;
+  };
 
   return (
     <>
@@ -87,28 +108,9 @@ export const HomePage = () => {
                         id={scheduledTrip.id}
                         plannedTripId={scheduledTrip.plannedTripId}
                         numberOfKids={scheduledTrip.numberOfKids}
-                        date={
-                          plannedTrips.find(
-                            (plannedTrip) =>
-                              plannedTrip.id === scheduledTrip.plannedTripId
-                          ).date
-                        }
-                        time={
-                          plannedTrips?.find(
-                            (plannedTrip) =>
-                              plannedTrip.id === scheduledTrip.plannedTripId
-                          ).time
-                        }
-                        school={
-                          schools.find(
-                            (school) =>
-                              school.id ===
-                              plannedTrips.find(
-                                (plannedTrip) =>
-                                  plannedTrip.id === scheduledTrip.plannedTripId
-                              ).schoolId
-                          ).name
-                        }
+                        date={date(scheduledTrip)}
+                        time={time(scheduledTrip)}
+                        school={schoolName(scheduledTrip)}
                         address={scheduledTrip.address}
                       />
                     ))}
