@@ -72,7 +72,7 @@ export const HomePage = () => {
     return schools?.find(
       (school) =>
         school.id ===
-        plannedTrips.find(
+        plannedTrips?.find(
           (plannedTrip) => plannedTrip.id === scheduledTrip.plannedTripId
         ).schoolId
     ).name;
