@@ -35,6 +35,14 @@ export const PlannedTrips = () => {
       return Number(a.date) - Number(b.date);
     });
 
+  const schoolName = (sortedTrip) => {
+    return schools.find(
+      (school) =>
+        school.id ===
+        sortedTrips.find((sortedTrip2) => sortedTrip2.id === sortedTrip.id)
+          .schoolId
+    ).name;
+  };
   return (
     <>
       <div className="plannedTripPage">
@@ -68,16 +76,7 @@ export const PlannedTrips = () => {
                           time={sortedTrip.time}
                           address={sortedTrip.address}
                           capacity={sortedTrip.capacity}
-                          school={
-                            schools.find(
-                              (school) =>
-                                school.id ===
-                                sortedTrips.find(
-                                  (sortedTrip2) =>
-                                    sortedTrip2.id === sortedTrip.id
-                                ).schoolId
-                            ).name
-                          }
+                          school={schoolName(sortedTrip)}
                         />
                       ))}
               </tbody>
